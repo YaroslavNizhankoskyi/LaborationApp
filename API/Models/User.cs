@@ -14,9 +14,9 @@ namespace API.Models
         public string SecondName { get; set; }
         
         [ForeignKey("Company")]
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
 
-        public string Position { get; set; }
+        public string? Position { get; set; }
 
         public int Age { get; set; }
 

@@ -33,8 +33,6 @@ D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Npgsql.dll
 D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Humanizer.dll
 D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
-D:\dev\LaborationApp\API\obj\Debug\netcoreapp3.1\API.csproj.CoreCompileInputs.cache
-D:\dev\LaborationApp\API\obj\Debug\netcoreapp3.1\API.MvcApplicationPartsAssemblyInfo.cache
 D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\API.deps.json
 D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\API.runtimeconfig.json
 D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\API.runtimeconfig.dev.json
@@ -43,3 +41,15 @@ D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\API.pdb
 D:\dev\LaborationApp\API\obj\Debug\netcoreapp3.1\API.dll
 D:\dev\LaborationApp\API\obj\Debug\netcoreapp3.1\API.pdb
 D:\dev\LaborationApp\API\obj\Debug\netcoreapp3.1\API.genruntimeconfig.cache
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\AutoMapper.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\dev\LaborationApp\API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\dev\LaborationApp\API\obj\Debug\netcoreapp3.1\API.csproj.CoreCompileInputs.cache
+D:\dev\LaborationApp\API\obj\Debug\netcoreapp3.1\API.MvcApplicationPartsAssemblyInfo.cache

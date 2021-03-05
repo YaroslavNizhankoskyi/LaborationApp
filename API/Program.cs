@@ -29,12 +29,21 @@ namespace API
                 var context = services.GetRequiredService<DataContext>();
                 await context.Database.MigrateAsync();
 
+                if (!await roleManager.RoleExistsAsync("Admin"))
+                    await roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
+                if (!await roleManager.RoleExistsAsync("Enterpreneur"))
+                    await roleManager.CreateAsync(new IdentityRole { Name = "Enterpreneur" });
+                if (!await roleManager.RoleExistsAsync("Worker"))
+                    await roleManager.CreateAsync(new IdentityRole { Name = "Worker" });
+
+
             }
             catch (Exception ex)
             {
                 var logger = services.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "Ann error occured during migrations");
+                logger.LogError(ex, "Ann error occured during igrations");
             }
+
 
 
             await host.RunAsync();
