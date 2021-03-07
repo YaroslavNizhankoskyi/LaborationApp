@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Persistance.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace API.Persistance
         private DataContext _context;
 
         private Repository<Company> companyRepo;
-        private Repository<Factor> factorRepo;
+        private FactorRepository factorRepo;
         private Repository<Feedback> feedbackRepo;
         private Repository<Tip> tipRepo;
         private Repository<UserTip> userTipRepo;
@@ -35,11 +36,11 @@ namespace API.Persistance
         }
 
 
-        public Repository<Factor> FactorRepository
+        public FactorRepository FactorRepository
         {
             get
             {
-                return factorRepo ?? (factorRepo = new Repository<Factor>(_context));
+                return factorRepo ?? (factorRepo = new FactorRepository(_context));
             }
         }
         public Repository<Tip> TipRepository

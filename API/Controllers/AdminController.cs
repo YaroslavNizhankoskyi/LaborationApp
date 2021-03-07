@@ -1,4 +1,6 @@
-﻿using API.Models;
+﻿using API.DTO;
+using API.Helpers;
+using API.Models;
 using API.Persistance;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -7,11 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
@@ -99,8 +103,50 @@ namespace API.Controllers
         }
 
         [HttpGet("Factors")]
-        public IActionResult GetFactors([FromQuery] FactorParams factorParam) 
+        public async Task<IActionResult> GetFactors([FromQuery] FactorParams factorParams) 
         {
+            var factors = await _uow.FactorRepository.GetFactorsAsync(factorParams);
+            if (factors.Any())
+            {
+                Response.AddPaginationHeader(factors.CurrentPage, factors.PageSize,
+                    factors.TotalCount, factors.TotalPages);
+
+                return Ok(factors);
+            }
+            else 
+            {
+                return NotFound("No such factors");
+            }
+        }
+
+        [HttpPost("Factors")]
+        public IActionResult AddFactor(CreateFactorDto model) 
+        {
+            var factor = _mapper.Map<Factor>(model);
+
+            _uow.FactorRepository.Add(factor);
+
+            if (_uow.Complete()) 
+            {
+                return Ok(factor);
+            }
+
+            return NotFound();
+        }
+
+
+        [HttpDelete("Factors/{id}")]
+        public IActionResult RemoveFactor(int id) 
+        {
+            var factor = _uow.FactorRepository.GetById(id);
+
+            if (factor != null) 
+            {
+                _uow.FactorRepository.Remove(factor);
+                return Ok("Removed");
+            }
+
+            return NotFound("No such factor");
 
         }
 

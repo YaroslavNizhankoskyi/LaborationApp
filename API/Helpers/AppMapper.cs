@@ -14,6 +14,10 @@ namespace API.Helpers
         public AppMapper()
         {
             CreateMap<UserDto, User>();
+
+            CreateMap<CreateFactorDto, Factor>()
+                .ForMember(p => p.FactorTypeId, s => s
+                .MapFrom( x => x.FactorType));
         }
     }
 }

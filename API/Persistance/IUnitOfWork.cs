@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Persistance.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace API.Persistance
 {
     public interface IUnitOfWork : IDisposable
     {
-        Repository<Factor> FactorRepository { get;  }
+        FactorRepository FactorRepository { get;  }
         Repository<Tip> TipRepository { get; }
         Repository<Company> CompanyRepository { get; }
         Repository<Feedback> FeedbackRepository { get; }
