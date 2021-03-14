@@ -19,16 +19,18 @@ namespace API.Models
         public string FactorHash { get; set; }
 
         [ForeignKey("HealthFactor")]
-        public int HealthFactorId { get; set; }
+        public int? HealthFactorId { get; set; }
 
         [ForeignKey("MentalFactor")]
-        public int MentalFactorId { get; set; }
+        public int? MentalFactorId { get; set; }
         
         [ForeignKey("SleepFactor")]
-        public int SleepFactorId { get; set; }
+        public int? SleepFactorId { get; set; }
 
         [ForeignKey("LaborFactor")]
-        public int LaborFactorId { get; set; }
+        public int? LaborFactorId { get; set; }
+
+        public int CoefficientSum { get; set; }
 
         public Factor HealthFactor { get; set; }
 
@@ -39,6 +41,23 @@ namespace API.Models
         public Factor LaborFactor { get; set; }
 
         public IEnumerable<UserTip> UserTips{ get; set; }
+
+        public Tip(Tip tip)
+        {
+            HealthFactorId = tip.HealthFactorId;
+            LaborFactorId = tip.MentalFactorId;
+            SleepFactorId = tip.SleepFactorId;
+            MentalFactorId = tip.MentalFactorId;
+            Name = tip.Name;
+            Text = tip.Text;
+            FactorHash = tip.FactorHash;
+            CoefficientSum = tip.CoefficientSum;
+        }
+
+        public Tip()
+        {
+
+        }
 
     }
 }

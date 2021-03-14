@@ -39,6 +39,7 @@ namespace API
 
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
+            services.AddDataProtection();
 
 
             services.AddDbContext<DataContext>(options =>
@@ -47,12 +48,9 @@ namespace API
 
                 string connStr;
 
-                // Depending on if in development or production, use either Heroku-provided
-                // connection string, or development connection string from env var.
                 if (env == "Development")
                 {
-                    // Use connection string from file.
-                    connStr = Configuration.GetConnectionString("DefaultConnection");
+                    connStr = Configuration.GetConnectionString("SqlServerConnection");
                 }
                 else
                 {
@@ -75,7 +73,7 @@ namespace API
 
                 // Whether the connection string came from the local development configuration file
                 // or from the environment variable from Heroku, use it to set up your DbContext.
-                options.UseNpgsql(connStr);
+                options.UseSqlServer(connStr);
             });
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -112,7 +110,7 @@ namespace API
                         {
                             ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(
-                                     Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                                     Encoding.UTF8.GetBytes(Configuration["TokenKey"])),
                             ValidateIssuer = false,
                             ValidateAudience = false
                         };

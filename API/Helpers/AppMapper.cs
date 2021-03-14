@@ -15,6 +15,20 @@ namespace API.Helpers
         {
             CreateMap<UserDto, User>();
 
+            CreateMap<UserConditionDto, Tip>();
+
+            CreateMap<CreateTipDto, Tip>();
+
+            CreateMap<TipCalculator, Tip>();
+
+            CreateMap<TipSearch, Tip>();
+
+            CreateMap<Tip, Tip>();
+               
+            CreateMap<RegisterDto, User>()
+                .ForMember(p => p.UserName, s => s
+                .MapFrom(x => x.Email));
+
             CreateMap<CreateFactorDto, Factor>()
                 .ForMember(p => p.FactorTypeId, s => s
                 .MapFrom( x => x.FactorType));
