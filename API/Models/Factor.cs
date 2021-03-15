@@ -27,6 +27,7 @@ namespace API.Models
         [EnumDataType(typeof(FactorTypes))]
         public FactorTypes FactorType { get; set; }
 
+        [MaxLength(50)]
         public string Name { get; set; }
 
         public int Coefficient { get; set; }
@@ -38,6 +39,7 @@ namespace API.Models
         public IEnumerable<Tip> SleepTips { get; set; }
 
         public IEnumerable<Tip> LaborTips { get; set; }
+
     }
 
     public enum FactorTypes

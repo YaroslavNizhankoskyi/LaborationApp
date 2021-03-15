@@ -15,8 +15,10 @@ namespace API.Models
         [ForeignKey("User")]
         public string UserId { get; set; }
 
+        [MaxLength(50)]
         public string Labor { get; set; }
 
+        [Range(-80, 100)]
         public int FaultChance { get; set; }
 
         public DateTime Date { get; set; }

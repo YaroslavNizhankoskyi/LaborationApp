@@ -34,7 +34,6 @@ namespace API.Persistance
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-
             builder.Entity<Feedback>()
                 .HasOne(c => c.User)
                 .WithMany(c => c.Feedbacks)

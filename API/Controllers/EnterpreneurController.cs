@@ -28,5 +28,11 @@ namespace API.Controllers
             _userManager = userManager;
             _mapper = mapper;
         }
+
+/*        [HttpPost("{userId}")]
+        public IActionResult CreateCompany(CreateCompanyDto model, string userId) 
+        {
+
+        }*/
     }
 }

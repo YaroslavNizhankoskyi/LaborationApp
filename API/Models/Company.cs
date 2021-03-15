@@ -12,15 +12,22 @@ namespace API.Models
         [Key]
         public int Id { get; set; }
 
-
+        [MaxLength(500)]
+        public string Description { get; set; }
+        
+        [MaxLength(50)]
         public string Name { get; set; }
 
         [ForeignKey("Enterpreneur")]
         public string EnterpreneurId { get; set; }
 
+        [ForeignKey("Photo")]
+        public int? PhotoId { get; set; }
+
         public User Enterpreneur { get; set; }
 
         public IEnumerable<User> Workers { get; set; }
 
+        public Photo Photo { get; set; }
     }
 }

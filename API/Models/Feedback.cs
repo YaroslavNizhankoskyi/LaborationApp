@@ -22,6 +22,7 @@ namespace API.Models
 
         public User Enterpreneur { get; set; }
 
+        [MaxLength(200)]
         public string Text { get; set; }
 
         public bool Watched { get; set; }
