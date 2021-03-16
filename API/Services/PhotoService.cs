@@ -25,7 +25,7 @@ namespace API.Services
             );
         }
         
-        public async Task<ImageUploadResult> AddTipPhotoAsync(IFormFile file)
+        public async Task<ImageUploadResult> AddSmallPhotoAsync(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();
 
@@ -43,7 +43,7 @@ namespace API.Services
             return uploadResult;
         }
 
-        public async Task<ImageUploadResult> AddUserPhotoAsync(IFormFile file) 
+        public async Task<ImageUploadResult> AddMediumPhotoAsync(IFormFile file) 
         {
             var uploadResult = new ImageUploadResult();
 

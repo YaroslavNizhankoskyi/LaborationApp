@@ -108,7 +108,7 @@ namespace API.Controllers
             User user = _mapper.Map<User>(model);
 
             if ((await _userManager.FindByEmailAsync(user.Email) != null))
-                return BadRequest("UserName email exists");
+                return BadRequest("User with such email already exists");
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -126,7 +126,22 @@ namespace API.Controllers
                 {
                     return BadRequest(autorize_result.Errors);
                 }
-                return Ok();
+
+                if (model.Role == "Enterpreneur") 
+                {
+                    user.Position = "Enterpreneur";
+                    
+                    var updateResult = await _userManager.UpdateAsync(user);
+
+                    if (!updateResult.Succeeded)
+                    {
+                        return BadRequest("Error while registering user");    
+                    }
+                   
+                }
+
+                return Ok("Registered");
+
             }
             return BadRequest("Аn error occured");
         }
@@ -146,7 +161,7 @@ namespace API.Controllers
         {
             var user = await  _userManager.FindByNameAsync(User.Identity.Name);
 
-            var result = await _photoService.AddUserPhotoAsync(file);
+            var result = await _photoService.AddMediumPhotoAsync(file);
 
             if (result.Error != null) return BadRequest(result.Error.Message);
 
@@ -202,9 +217,6 @@ namespace API.Controllers
             }
 
             return BadRequest("Error while removing photo reference");
-
-
-
         }
 
     }

@@ -2,6 +2,7 @@
 using API.Helpers;
 using API.Models;
 using API.Persistance;
+using API.Services.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
@@ -23,16 +24,20 @@ namespace API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IDataProtectionProvider _provider;
+        private readonly IPhotoService _photoService;
+
         public TipController(IUnitOfWork uow,
             UserManager<User> userManager,
             IMapper mapper,
-            IDataProtectionProvider provider)
+            IDataProtectionProvider provider,
+            IPhotoService photoService)
         {
             _uow = uow;
             _userManager = userManager;
             _mapper = mapper;
             _provider = provider;
-        }
+            _photoService = photoService;
+        }   
 
         [HttpGet("{name}")]
         public IActionResult GetTips(string name)
@@ -75,7 +80,7 @@ namespace API.Controllers
 
 
         }
-
+            
         [HttpPut]
         public IActionResult EditTip(EditTipDto model) 
         {
