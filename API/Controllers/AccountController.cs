@@ -1,8 +1,10 @@
 ﻿using API.DTO;
 using API.Models;
 using API.Persistance;
+using API.Services.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -27,19 +29,21 @@ namespace API.Controllers
         private readonly IConfiguration _config;
         private SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-
+        private readonly IPhotoService _photoService;
 
         public AccountController(IUnitOfWork uow,
             IMapper mapper,
             UserManager<User> userManager,
             IConfiguration config,
             SignInManager<User> signInManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IPhotoService photoService)
         {
             _mapper = mapper;
             _userManager = userManager;
             _config = config;
             _signInManager = signInManager;
+            _photoService = photoService;
             _roleManager = roleManager;
         }
 
@@ -131,6 +135,25 @@ namespace API.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("AddPhoto")]
+        public async Task<IActionResult> AddPhoto(IFormFile file) 
+        {
+            var user = _userManager.FindByNameAsync(User.Identity.Name);
+
+            var result = await _photoService.AddUserPhotoAsync(file);
+
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
+            var photo = new Photo
+            {
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId
+            };
+
             return Ok();
         }
     }

@@ -23,6 +23,8 @@ namespace API.Persistance
 
         public DbSet<UserTip> UserTips { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
+
 
         public DataContext(DbContextOptions<DataContext> options)
        : base(options)

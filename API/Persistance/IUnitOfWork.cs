@@ -15,6 +15,7 @@ namespace API.Persistance
         Repository<Feedback> FeedbackRepository { get; }
         Repository<UserCharacteristic> UserCharacteristicRepository { get; }
         Repository<UserTip> UserTipRepository { get; }
+        Repository<Photo> PhotoRepository { get; }
         bool Complete();
     }
 }

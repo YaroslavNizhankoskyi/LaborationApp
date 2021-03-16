@@ -17,13 +17,13 @@ namespace API.Persistance
         private Repository<Tip> tipRepo;
         private Repository<UserTip> userTipRepo;
         private Repository<UserCharacteristic> userCharacteristicRepo;
+        private Repository<Photo> photoRepo;
 
-
-        public Repository<Company> Repository
+        public Repository<Photo> PhotoRepository
         {
             get
             {
-                return companyRepo ?? (companyRepo = new Repository<Company>(_context));
+                return photoRepo ?? (photoRepo = new Repository<Photo>(_context));
             }
         }
 
