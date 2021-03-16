@@ -30,6 +30,7 @@ namespace API.Controllers
         private SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IPhotoService _photoService;
+        private readonly IUnitOfWork _uow;
 
         public AccountController(IUnitOfWork uow,
             IMapper mapper,
@@ -45,6 +46,7 @@ namespace API.Controllers
             _signInManager = signInManager;
             _photoService = photoService;
             _roleManager = roleManager;
+            _uow = uow;
         }
 
         [HttpPost("Login")]
@@ -142,7 +144,7 @@ namespace API.Controllers
         [HttpPost("AddPhoto")]
         public async Task<IActionResult> AddPhoto(IFormFile file) 
         {
-            var user = _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await  _userManager.FindByNameAsync(User.Identity.Name);
 
             var result = await _photoService.AddUserPhotoAsync(file);
 
@@ -154,7 +156,56 @@ namespace API.Controllers
                 PublicId = result.PublicId
             };
 
-            return Ok();
+            _uow.PhotoRepository.Add(photo);
+
+            if (_uow.Complete()) 
+            {
+                user.PhotoId = photo.Id;
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (updateResult.Succeeded)
+                {
+                    return Ok("User Photo added successfully");
+                }
+                else 
+                {
+                    return BadRequest(updateResult.Errors);
+                }
+
+                
+
+            }
+
+            return BadRequest("Photo hasn't been added to database");
         }
+
+
+        [Authorize]
+        [HttpDelete("DeletePhoto")]
+        public async Task<IActionResult> RemovePhoto(string publicId)
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var result = await  _photoService.DeletePhotoAsync(publicId);
+
+            if (result.Error != null) 
+            {
+                return BadRequest("Error while removing photo");
+            }
+
+            user.PhotoId = null;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (updateResult.Succeeded) 
+            {
+                return Ok("Photo removed");
+            }
+
+            return BadRequest("Error while removing photo reference");
+
+
+
+        }
+
     }
 }
