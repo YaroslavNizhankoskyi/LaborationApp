@@ -2,6 +2,7 @@
 using API.Helpers;
 using API.Models;
 using API.Persistance;
+using API.Services.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -129,7 +130,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Factors")]
-        public IActionResult AddFactor(CreateFactorDto model) 
+        public async Task<IActionResult> AddFactor(CreateFactorDto model) 
         {
             var factor = _mapper.Map<Factor>(model);
 

@@ -6,6 +6,7 @@ using API.Services.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -54,7 +55,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTip(CreateTipDto model) 
+        public async Task<IActionResult> CreateTip(CreateTipDto model) 
         {
             var tip = _mapper.Map<Tip>(model);
 
@@ -69,6 +70,22 @@ namespace API.Controllers
                 return BadRequest("Tip with such factors already exists, consider changing pre-existing tip");
             }
 
+            var result = await _photoService.AddSmallPhotoAsync(model.Photo);
+
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
+            var photo = new Photo
+            {
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId
+            };
+
+            _uow.PhotoRepository.Add(photo);
+
+            _uow.Complete();
+            
+            tipHash.PhotoId = photo.Id;
+
             _uow.TipRepository.Add(tipHash);
 
             if (_uow.Complete()) 
@@ -82,7 +99,7 @@ namespace API.Controllers
         }
             
         [HttpPut]
-        public IActionResult EditTip(EditTipDto model) 
+        public async Task<IActionResult> EditTip(EditTipDto model) 
         {
             var tip = _mapper.Map<Tip>(model);
 
@@ -118,6 +135,43 @@ namespace API.Controllers
 
         }
 
+        [HttpPost("{tipId}")]
+        public async Task<IActionResult> AddTipPhoto(int tipId, IFormFile newPhoto) 
+        {
+            var tip = _uow.TipRepository
+                .Find(p => p.Id == tipId)
+                .FirstOrDefault();
+
+            if (tip == null) 
+            {
+                return BadRequest("No tip with such Id");
+            }
+
+            var result = await _photoService.AddMediumPhotoAsync(newPhoto);
+
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
+            var photo = new Photo
+            {
+                Url = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId
+            };
+
+            _uow.PhotoRepository.Add(photo);
+
+            if (_uow.Complete())
+            {
+                tip.PhotoId = photo.Id;
+
+                if (_uow.Complete()) 
+                {
+                    return Ok("Added photo");
+                }
+            }
+
+            return BadRequest("Error while adding photo");
+        }
+
         [HttpDelete("{id}")]
         public IActionResult RemoveTip(int id) 
         {
@@ -140,7 +194,7 @@ namespace API.Controllers
         }
 
 
-        [Authorize(Roles = "Worker")]
+        [Authorize(Roles = "Worker, Enterprener")]
         [HttpGet("User/{userId}")]
         public IActionResult GetUserTips(string userId) 
         {
@@ -151,7 +205,7 @@ namespace API.Controllers
             return BadRequest("No user tips yet");
         }
 
-        [Authorize(Roles = "Worker")]
+        [Authorize(Roles = "Enterpreneur")]
         [HttpPost("User/{userId}")]
         public IActionResult CreateUserTip(UserConditionDto model, string userId) 
         {

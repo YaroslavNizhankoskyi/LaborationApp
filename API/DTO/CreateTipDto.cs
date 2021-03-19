@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace API.DTO
 
         public string Text { get; set; }
 
+        public IFormFile Photo { get; set; }
         public int HealthFactorId { get; set; }
 
         public int MentalFactorId { get; set; }
