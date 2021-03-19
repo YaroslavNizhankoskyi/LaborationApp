@@ -45,10 +45,19 @@ namespace API.Controllers
         }
 
         [HttpGet("Users")]
-        public IActionResult ListUsers()
+        public IActionResult ListUsers(string email)
         {
             var users = _userManager.Users;
-            return Ok(users);
+
+            if (!string.IsNullOrEmpty(email)) 
+            {
+                users = users
+                    .Where(p => p.Email.Contains(email));
+            }
+
+            var model = _mapper.Map<UserQuickInfoDto>(users);
+
+            return Ok(model);
         }
 
         [HttpGet("Roles/{name}")]

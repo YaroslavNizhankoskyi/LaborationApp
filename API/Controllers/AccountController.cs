@@ -146,7 +146,6 @@ namespace API.Controllers
             return BadRequest("Аn error occured");
         }
 
-
         [Authorize]
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
@@ -193,7 +192,6 @@ namespace API.Controllers
             return BadRequest("Photo hasn't been added to database");
         }
 
-
         [Authorize]
         [HttpDelete("DeletePhoto")]
         public async Task<IActionResult> RemovePhoto(string publicId)
@@ -219,5 +217,55 @@ namespace API.Controllers
             return BadRequest("Error while removing photo reference");
         }
 
+        [Authorize]
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserAccount(string userId) 
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null) 
+            {
+                return BadRequest("No such user");
+            }
+
+            var model = _mapper.Map<UserDetailsDto>(user);
+
+            var userCompanyName = _uow.CompanyRepository
+                .Find(p => p.Id == user.CompanyId)
+                .FirstOrDefault()
+                .Name;
+
+            var userPhotoUrl = _uow.PhotoRepository
+                .Find(p => p.Id == user.PhotoId)
+                .FirstOrDefault()
+                .Url;
+
+            model.CompanyName = userCompanyName;
+            model.PhotoUrl = userPhotoUrl;
+
+            return Ok(model);
+
+        }
+
+        public async Task<IActionResult> EditUser(string userId, EditUserDto model) 
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if(user == null) 
+            {
+                return BadRequest("No user with such id");
+            }
+
+            user = _mapper.Map(model, user);
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok("User updated");       
+        }
     }
 }

@@ -87,6 +87,11 @@ namespace API.Controllers
                 .Find(p => p.Id == companyId)
                 .FirstOrDefault();
 
+            if (company == null)
+            {
+                return BadRequest("No such company");
+            }
+
             if (user.Id != company.EnterpreneurId) 
             {
                 return BadRequest("You are not owner of this company");
@@ -104,6 +109,7 @@ namespace API.Controllers
             return BadRequest("Error while removing company");
 
         }
+
         [HttpPost("worker")]
         public async Task<IActionResult> AddWorker(AddWorkerDto model) 
         {
@@ -112,6 +118,11 @@ namespace API.Controllers
             var company = _uow.CompanyRepository
                 .Find(p => p.Id == model.CompanyId)
                 .FirstOrDefault();
+
+            if (company == null)
+            {
+                return BadRequest("No such company");
+            }
 
             if (company.EnterpreneurId != user.Id) 
             {
@@ -147,6 +158,12 @@ namespace API.Controllers
             var company = _uow.CompanyRepository
                 .Find(p => p.Id == companyId)
                 .FirstOrDefault();
+            
+            if (company == null)
+            {
+                return BadRequest("No such company");
+            }
+
 
             if (company.EnterpreneurId != user.Id)
             {
@@ -164,6 +181,40 @@ namespace API.Controllers
             }
 
             return BadRequest("Error while removing user");
+        }
+
+        [HttpGet("{companyId}/worker")]
+        public async Task<IActionResult> GetWorkers(int companyId, string email) 
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var company = _uow.CompanyRepository
+                .Find(p => p.Id == companyId)
+                .FirstOrDefault();
+
+            if (company == null) 
+            {
+                return BadRequest("No such company");
+            }
+
+            if (company.EnterpreneurId != user.Id)
+            {
+                return BadRequest("You are not owner of this company");
+            }
+
+            var workers = _userManager.Users
+                .Where(p => p.CompanyId == companyId);
+
+            if(!string.IsNullOrEmpty(email)) 
+            {
+                workers = workers
+                    .Where(p => p.Email.Contains(email));
+            }
+
+            var model = _mapper.Map<IEnumerable<WorkerDto>>(workers);
+
+            return Ok(model);
+
         }
     }
 }
