@@ -193,7 +193,6 @@ namespace API.Controllers
             return BadRequest("Error while removing tip");
         }
 
-
         [Authorize(Roles = "Worker, Enterprener")]
         [HttpGet("User/{userId}")]
         public IActionResult GetUserTips(string userId) 

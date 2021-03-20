@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using API.DTO;
+using API.Models;
 using API.Persistance;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -28,10 +29,60 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Enterpreneur, Worker")]
+        [HttpGet("userId")]
+        public IActionResult GetUserFeedbacks(string userId) 
+        {
+            var user = _userManager.FindByIdAsync(userId);
+
+            if (user == null) 
+            {
+                return BadRequest("No such user");
+            }
+
+            var feedbacks = _uow.FeedbackRepository
+                .Find(p => p.UserId == userId);
+
+
+            var model = _mapper.Map<FeedbackInfoDto>(feedbacks);
+
+            return Ok(model);
+        }
+
         [HttpPost]
-        public 
+        public async Task<IActionResult> AddFeedback(AddFeedbackDto model) 
+        {
+            var user = await _userManager.FindByIdAsync(model.WorkerId);
 
+            if (user == null)
+            {
+                return BadRequest("No such user");
+            }
 
+            var enterpreneur = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (enterpreneur.CompanyId != user.CompanyId) 
+            {
+                return BadRequest("You have no right to add feedback to that user");
+            }
+
+            var feedback = new Feedback
+            {
+                Text = model.Text,
+                Watched = false,
+                UserId = model.WorkerId,
+                EnterpreneurId = enterpreneur.Id
+            };
+
+            _uow.FeedbackRepository.Add(feedback);
+
+            if (_uow.Complete()) 
+            {
+                return Ok("Added feddback");
+            }
+
+            return BadRequest("Error while adding feedback");
+        }
         
     }
 }

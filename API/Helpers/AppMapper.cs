@@ -13,6 +13,7 @@ namespace API.Helpers
 
         public AppMapper()
         {
+            CreateMap<FeedbackInfoDto, Feedback>();
 
             CreateMap<EditUserDto, User>();
 
