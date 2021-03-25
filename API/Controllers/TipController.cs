@@ -194,7 +194,7 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Worker, Enterprener")]
-        [HttpGet("User/{userId}")]
+        [HttpGet("user/{userId}")]
         public IActionResult GetUserTips(string userId) 
         {
             var userTips = _uow.UserTipRepository.Find(p => p.UserId == userId);
@@ -205,7 +205,7 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Enterpreneur")]
-        [HttpPost("User/{userId}")]
+        [HttpPost("user/{userId}")]
         public IActionResult CreateUserTip(UserConditionDto model, string userId) 
         {
             if (_userManager.FindByIdAsync(userId) == null) 
@@ -282,7 +282,7 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Worker")]
-        [HttpPost("Watched/{userId}")]
+        [HttpPost("watch/{userId}")]
         public IActionResult WatchUserTips(string userId, IEnumerable<int> tipIds) 
         {
             var user = _userManager.FindByIdAsync(userId);

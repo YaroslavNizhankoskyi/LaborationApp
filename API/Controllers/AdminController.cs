@@ -38,14 +38,14 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("Roles")]
+        [HttpGet("roles")]
         public IActionResult ListRoles()
         {
             var roles = _roleManager.Roles;
             return Ok(roles);
         }
 
-        [HttpGet("Users")]
+        [HttpGet("users")]
         public IActionResult ListUsers(string email)
         {
             var users = _userManager.Users;
@@ -61,7 +61,7 @@ namespace API.Controllers
             return Ok(model);
         }
 
-        [HttpGet("Roles/{name}")]
+        [HttpGet("roles/{name}")]
         public async Task<IActionResult> GetUsersInRole(string name)
         {
 
@@ -76,7 +76,7 @@ namespace API.Controllers
             return Ok(emailsOfUsers);
         }
 
-        [HttpPost("Roles/{roleName}")]
+        [HttpPost("roles/{roleName}")]
         public async Task<IActionResult> EditUsersInRole(string roleName, IEnumerable<string> model)
         {
 
@@ -112,7 +112,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpGet("Factors")]
+        [HttpGet("factors")]
         public async Task<IActionResult> GetFactors([FromQuery] FactorParams factorParams) 
         {
             var factors = await _uow.FactorRepository.GetFactorsAsync(factorParams);
@@ -129,7 +129,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost("Factors")]
+        [HttpPost("factors")]
         public async Task<IActionResult> AddFactor(CreateFactorDto model) 
         {
             var factor = _mapper.Map<Factor>(model);
@@ -145,7 +145,7 @@ namespace API.Controllers
         }
 
 
-        [HttpDelete("Factors/{id}")]
+        [HttpDelete("factors/{id}")]
         public IActionResult RemoveFactor(int id) 
         {
             var factor = _uow.FactorRepository.GetById(id);

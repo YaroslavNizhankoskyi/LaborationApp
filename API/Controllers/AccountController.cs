@@ -49,7 +49,7 @@ namespace API.Controllers
             _uow = uow;
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
@@ -102,7 +102,7 @@ namespace API.Controllers
             return Unauthorized();
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto model)
         {
             User user = _mapper.Map<User>(model);
@@ -147,7 +147,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpPost("Logout")]
+        [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -155,7 +155,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpPost("Photo")]
+        [HttpPost("photo")]
         public async Task<IActionResult> AddPhoto(IFormFile file) 
         {
             var user = await  _userManager.FindByNameAsync(User.Identity.Name);
@@ -193,7 +193,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpDelete("Photo")]
+        [HttpDelete("photo")]
         public async Task<IActionResult> RemovePhoto(string publicId)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
