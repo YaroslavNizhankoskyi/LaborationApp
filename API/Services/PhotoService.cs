@@ -23,8 +23,11 @@ namespace API.Services
                 config.Value.ApiKey,
                 config.Value.ApiSecret
             );
+
+            _cloudinary = new Cloudinary(acc);
+
         }
-        
+
         public async Task<ImageUploadResult> AddSmallPhotoAsync(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();

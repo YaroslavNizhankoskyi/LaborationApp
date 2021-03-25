@@ -155,7 +155,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpPost("AddPhoto")]
+        [HttpPost("Photo")]
         public async Task<IActionResult> AddPhoto(IFormFile file) 
         {
             var user = await  _userManager.FindByNameAsync(User.Identity.Name);
@@ -193,7 +193,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpDelete("DeletePhoto")]
+        [HttpDelete("Photo")]
         public async Task<IActionResult> RemovePhoto(string publicId)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
