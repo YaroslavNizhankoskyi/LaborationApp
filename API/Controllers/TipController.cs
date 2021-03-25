@@ -195,8 +195,15 @@ namespace API.Controllers
 
         [Authorize(Roles = "Worker, Enterprener")]
         [HttpGet("user/{userId}")]
-        public IActionResult GetUserTips(string userId) 
+        public async Task<IActionResult> GetUserTips(string userId) 
         {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (user == null) 
+            {
+                return BadRequest("No such user");
+            }
+
             var userTips = _uow.UserTipRepository.Find(p => p.UserId == userId);
 
             if(userTips.Any()) return Ok(userTips);
@@ -205,10 +212,11 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Enterpreneur")]
-        [HttpPost("user/{userId}")]
-        public IActionResult CreateUserTip(UserConditionDto model, string userId) 
+        [HttpPost("user")]
+        public async Task<IActionResult> CreateUserTip(UserConditionDto model) 
         {
-            if (_userManager.FindByIdAsync(userId) == null) 
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (user  == null) 
             {
                 return BadRequest("No such user");
             }
@@ -282,10 +290,10 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Worker")]
-        [HttpPost("watch/{userId}")]
-        public IActionResult WatchUserTips(string userId, IEnumerable<int> tipIds) 
+        [HttpPost("watch")]
+        public async Task<IActionResult> WatchUserTips(IEnumerable<int> tipIds) 
         {
-            var user = _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
             if (user == null) 
             {

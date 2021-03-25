@@ -31,9 +31,9 @@ namespace API.Controllers
 
         [Authorize(Roles = "Enterpreneur, Worker")]
         [HttpGet("userId")]
-        public IActionResult GetUserFeedbacks(string userId) 
+        public async Task<IActionResult> GetUserFeedbacks(string userId) 
         {
-            var user = _userManager.FindByIdAsync(userId);
+            var user = await  _userManager.FindByIdAsync(userId);
 
             if (user == null) 
             {

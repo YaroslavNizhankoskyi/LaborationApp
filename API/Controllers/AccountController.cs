@@ -247,9 +247,10 @@ namespace API.Controllers
 
         }
 
-        public async Task<IActionResult> EditUser(string userId, EditUserDto model) 
+        [HttpPut]
+        public async Task<IActionResult> EditUser( EditUserDto model) 
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
             if(user == null) 
             {
