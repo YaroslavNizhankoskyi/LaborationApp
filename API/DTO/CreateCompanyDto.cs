@@ -12,6 +12,6 @@ namespace API.DTO
 
         public string Description { get; set; }
 
-        public IFormFile File { get; set; }
+        public IFormFile? File { get; set; }
     }
 }

@@ -45,6 +45,7 @@ namespace API.Controllers
             return Ok(roles);
         }
 
+        [Authorize(Roles = "Admin, Enterpreneur")]
         [HttpGet("users")]
         public IActionResult ListUsers(string email)
         {
@@ -56,7 +57,7 @@ namespace API.Controllers
                     .Where(p => p.Email.Contains(email));
             }
 
-            var model = _mapper.Map<UserQuickInfoDto>(users);
+            var model = _mapper.Map<User[], IList<UserQuickInfoDto>>(users.ToArray());
 
             return Ok(model);
         }

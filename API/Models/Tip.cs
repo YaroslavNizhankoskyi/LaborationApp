@@ -37,6 +37,8 @@ namespace API.Models
 
         public int CoefficientSum { get; set; }
 
+        public bool CanDelete { get; set; }
+
         public Factor HealthFactor { get; set; }
 
         public Factor MentalFactor { get; set; }

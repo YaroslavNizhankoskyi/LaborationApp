@@ -11,8 +11,6 @@ namespace API.DTO
         public string Name { get; set; }
 
         public string Text { get; set; }
-
-        public IFormFile Photo { get; set; }
         public int HealthFactorId { get; set; }
 
         public int MentalFactorId { get; set; }

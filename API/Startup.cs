@@ -41,10 +41,19 @@ namespace API
         {
 
             services.AddControllers();
+
             services.AddAutoMapper(typeof(Startup));
+
             services.AddDataProtection();
+
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+
             services.AddScoped<IPhotoService, PhotoService>();
+
+            services.AddTransient<ITipService, TipService>();
+
+            services.AddTransient<ITipCalculator, TipCalculator>();
+
             services.AddDbContext<DataContext>(options =>
             {
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");

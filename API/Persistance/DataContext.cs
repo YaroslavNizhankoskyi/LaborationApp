@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Persistance.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,6 +36,9 @@ namespace API.Persistance
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            builder
+                .ApplyConfiguration(new TipConfiguration());
 
             builder.Entity<Feedback>()
                 .HasOne(c => c.User)
