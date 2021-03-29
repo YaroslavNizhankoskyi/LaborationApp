@@ -3,6 +3,7 @@ using API.Helpers;
 using API.Models;
 using API.Persistance;
 using API.Services.Interfaces;
+using API.Validators;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -25,17 +26,20 @@ namespace API.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly ITipService _tipService;
 
 
         public AdminController(IUnitOfWork unitOfWork,
             RoleManager<IdentityRole> roleManager,
             UserManager<User> userManager,
-            IMapper mapper)
+            IMapper mapper,
+            ITipService tipService)
         {
             _uow = unitOfWork;
             _roleManager = roleManager;
             _userManager = userManager;
             _mapper = mapper;
+            _tipService = tipService;
         }
 
         [HttpGet("roles")]
@@ -133,13 +137,21 @@ namespace API.Controllers
         [HttpPost("factors")]
         public async Task<IActionResult> AddFactor(CreateFactorDto model) 
         {
+            var validator = new CreateFactorDtoValidator();
+
+            var validationResult = validator.Validate(model);
+
+            if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+
             var factor = _mapper.Map<Factor>(model);
 
             _uow.FactorRepository.Add(factor);
 
             if (_uow.Complete()) 
             {
-                return Ok(factor);
+                if(_tipService.AddBaseTip(factor)) return Ok("Added");
+
+                return BadRequest("Error while adding factor");
             }
 
             return NotFound();
@@ -153,8 +165,11 @@ namespace API.Controllers
 
             if (factor != null) 
             {
+                if (!_tipService.RemoveBaseTip(factor)) return BadRequest("Error while removing factor");
+
                 _uow.FactorRepository.Remove(factor);
-                return Ok("Removed");
+
+                if(_uow.Complete()) return Ok("Removed");
             }
 
             return NotFound("No such factor");

@@ -83,6 +83,8 @@ namespace API.Services
 
             if (tipCoefficient.HasValue) tip.CoefficientSum = tipCoefficient.Value;
 
+            tip.CanDelete = true;
+
 
 
             _uow.TipRepository.Add(tip);
@@ -149,52 +151,100 @@ namespace API.Services
             return false;
         }
 
-        private Tip GetTipBySingleFactor(Tip tip)
-        {
-            if (tip.HealthFactorId.HasValue)
-            {
-                var hash = GetBaseTipHash(tip.HealthFactorId.Value);
-                return _uow.TipRepository
-                    .Find(u => u.FactorHash == hash)
-                    .FirstOrDefault();
-            }
-
-            if (tip.MentalFactorId.HasValue)
-            {
-                var hash = GetBaseTipHash(tip.MentalFactorId.Value);
-                return _uow.TipRepository
-                    .Find(u => u.FactorHash == hash)
-                    .FirstOrDefault();
-            }
-
-            if (tip.SleepFactorId.HasValue)
-            {
-                var hash = GetBaseTipHash(tip.SleepFactorId.Value);
-                return _uow.TipRepository
-                    .Find(u => u.FactorHash == hash)
-                    .FirstOrDefault();
-            }
-
-            if (tip.LaborFactorId.HasValue)
-            {
-                var hash = GetBaseTipHash(tip.LaborFactorId.Value);
-                return _uow.TipRepository
-                    .Find(u => u.FactorHash == hash)
-                    .FirstOrDefault();
-            }
-
-            return null;
-
-        }
-
         public bool DeleteTip(int id)
         {
+
             var tip = _uow.TipRepository
                 .Find(u => u.Id == id)
                 .FirstOrDefault();
             _uow.TipRepository.Remove(tip);
 
             return _uow.Complete();
+        }
+
+        public bool RemoveBaseTip(Factor factor) 
+        {
+            var hash = GetBaseTipHash(factor.Id);
+
+            var tip = _uow.TipRepository
+                .Find(u => u.FactorHash == hash)
+                .FirstOrDefault();
+            if (tip == null) return false;
+
+            _uow.TipRepository
+                .Remove(tip);
+
+            return _uow.Complete();
+        }
+
+        public bool AddBaseTip(Factor factor)
+        {
+            switch (factor.FactorTypeId)
+            {
+                case 0:
+                    var tip = new Tip
+                    {
+                        Name = factor.Name,
+                        Text = "Сделайте перерыв. Make a break",
+                        MentalFactorId = factor.Id,
+                        FactorHash = GetBaseTipHash(factor.Id),
+                        CoefficientSum = factor.Coefficient,
+                        CanDelete = false
+                    };
+
+                    _uow.TipRepository
+                        .Add(tip);
+                    break;
+                case 1:
+                    tip = new Tip
+                    {
+                        Name = factor.Name,
+                        Text = "Возможно пришло время поесть. Maybe it's time to eat",
+                        MentalFactorId = factor.Id,
+                        FactorHash = GetBaseTipHash(factor.Id),
+                        CoefficientSum = factor.Coefficient,
+                        CanDelete = false
+                    };
+
+                    _uow.TipRepository
+                        .Add(tip);
+                    break;
+                case 2:
+                    tip = new Tip
+                    {
+                        Name = factor.Name,
+                        Text = "Утро вечера мудренее. An hour in the morning is worth two in the evening.",
+                        MentalFactorId = factor.Id,
+                        FactorHash = GetBaseTipHash(factor.Id),
+                        CoefficientSum = factor.Coefficient,
+                        CanDelete = false
+                    };
+
+                    _uow.TipRepository
+                        .Add(tip);
+                    break;
+                case 3:
+                    tip = new Tip
+                    {
+                        Name = factor.Name,
+                        Text = "Создайте четкий план работы у себя в голове. Make up a clear plan in your head",
+                        MentalFactorId = factor.Id,
+                        FactorHash = GetBaseTipHash(factor.Id),
+                        CoefficientSum = factor.Coefficient,
+                        CanDelete = false
+                    };
+
+                    _uow.TipRepository
+                        .Add(tip);
+                    break;
+                default:
+                    return false;
+            }
+
+            if (_uow.Complete()) return true;
+
+            return false;
+
         }
 
         public Tip EditTip(EditTipDto model)
@@ -224,9 +274,11 @@ namespace API.Services
         public IEnumerable<TipDto> GetAll()
         {
             var tips = _uow.TipRepository
-                 .GetAll();
+                 .GetAll()
+                 .ToArray();
+                 
 
-            var model = _mapper.Map<IEnumerable<TipDto>>(tips);
+            var model = _mapper.Map<Tip[], IEnumerable<TipDto>>(tips);
 
             return model;
         }
@@ -293,18 +345,37 @@ namespace API.Services
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(tip.HealthFactorId);
+            sb.Append("-");
             sb.Append(tip.LaborFactorId);
+            sb.Append("-");
             sb.Append(tip.MentalFactorId);
+            sb.Append("-");
             sb.Append(tip.SleepFactorId);
 
-            return _protector.Protect(sb.ToString());
+            string hash;
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                hash = BitConverter.ToString(
+                  md5.ComputeHash(Encoding.UTF8.GetBytes(sb.ToString()))
+                ).Replace("-", String.Empty);
+            }
+
+            return hash;
         }
 
         private string GetBaseTipHash(int id) 
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(id);
-            return _protector.Protect(sb.ToString());
+            string hash;
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                hash = BitConverter.ToString(
+                  md5.ComputeHash(Encoding.UTF8.GetBytes(sb.ToString()))
+                ).Replace("-", String.Empty);
+            }
+
+            return hash;
         }
 
         private bool TipExists(string hash)
@@ -320,6 +391,44 @@ namespace API.Services
                 .Find(u => u.Id == id);
 
             return tip == null;
+        }
+
+        private Tip GetTipBySingleFactor(Tip tip)
+        {
+            if (tip.HealthFactorId.HasValue)
+            {
+                var hash = GetBaseTipHash(tip.HealthFactorId.Value);
+                return _uow.TipRepository
+                    .Find(u => u.FactorHash == hash)
+                    .FirstOrDefault();
+            }
+
+            if (tip.MentalFactorId.HasValue)
+            {
+                var hash = GetBaseTipHash(tip.MentalFactorId.Value);
+                return _uow.TipRepository
+                    .Find(u => u.FactorHash == hash)
+                    .FirstOrDefault();
+            }
+
+            if (tip.SleepFactorId.HasValue)
+            {
+                var hash = GetBaseTipHash(tip.SleepFactorId.Value);
+                return _uow.TipRepository
+                    .Find(u => u.FactorHash == hash)
+                    .FirstOrDefault();
+            }
+
+            if (tip.LaborFactorId.HasValue)
+            {
+                var hash = GetBaseTipHash(tip.LaborFactorId.Value);
+                return _uow.TipRepository
+                    .Find(u => u.FactorHash == hash)
+                    .FirstOrDefault();
+            }
+
+            return null;
+
         }
     }
 }

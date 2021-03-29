@@ -35,14 +35,10 @@ namespace API.Controllers
             _tipService = tipService;
         }   
 
-        [HttpGet("{name}")]
-        public IActionResult GetTips(string name)
+        [HttpGet]
+        public IActionResult GetTips()
         {
             var tips = _tipService.GetAll();
-            if (!string.IsNullOrEmpty(name))
-            {
-                tips = tips.Where(p => p.Name == name);
-            }
 
             if (tips.Any()) return Ok(tips);
 

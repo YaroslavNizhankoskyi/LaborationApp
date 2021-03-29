@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "rg45WD68rDdLnlpNMwFleTn+dFLvOy0nQVKK+rtl5+5Z0kpO6BTI5s/iFKyRONJcklgHz65Oh9lv5pNDa+5kMg==",
+  "dgSpecHash": "C+xCWGNwmGFUsccreU4Of8B/2jrX6YDIamokGCAMGnp6kQUuEgBmnaBiNm1L+AkJy3PHJr2MudaITToizaw2Sw==",
   "success": true,
   "projectFilePath": "D:\\dev\\LaborationApp\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yaros\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\yaros\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\yaros\\.nuget\\packages\\cloudinarydotnet\\1.15.0\\cloudinarydotnet.1.15.0.nupkg.sha512",
+    "C:\\Users\\yaros\\.nuget\\packages\\fluentvalidation\\10.0.0-preview4\\fluentvalidation.10.0.0-preview4.nupkg.sha512",
+    "C:\\Users\\yaros\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.0.0-preview4\\fluentvalidation.aspnetcore.10.0.0-preview4.nupkg.sha512",
+    "C:\\Users\\yaros\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.0.0-preview4\\fluentvalidation.dependencyinjectionextensions.10.0.0-preview4.nupkg.sha512",
     "C:\\Users\\yaros\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\yaros\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.1\\microsoft.aspnetcore.authentication.jwtbearer.3.1.1.nupkg.sha512",
     "C:\\Users\\yaros\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.3\\microsoft.aspnetcore.cryptography.internal.5.0.3.nupkg.sha512",

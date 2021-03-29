@@ -44,9 +44,9 @@ namespace API.Models
 
     public enum FactorTypes
     {
-        Mental = 0,
-        Health = 1,
-        Sleep = 4,
-        Labor = 5
+        Health = 0,
+        Mental = 1,
+        Sleep = 2,
+        Labor = 3
     }
 }

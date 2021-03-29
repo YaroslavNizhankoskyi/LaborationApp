@@ -15,29 +15,25 @@ namespace API.Helpers
         {
             CreateMap<FactorDto, Factor>();
 
-            CreateMap<TipDto, Tip>();
+            CreateMap<Tip, TipDto>();
 
-            CreateMap<TipDetailsDto, Tip>();
+            CreateMap<Tip, TipDetailsDto>();
 
-            CreateMap<FeedbackInfoDto, Feedback>();
+            CreateMap<Feedback, FeedbackInfoDto>();
 
             CreateMap<EditUserDto, User>();
 
-            CreateMap<UserDetailsDto, User>();
+            CreateMap<User, UserDetailsDto>();
 
-            CreateMap<UserQuickInfoDto, User>();
+            CreateMap<User, UserQuickInfoDto>();
 
-            CreateMap<WorkerDto, User>();
+            CreateMap<User, User>();
 
-            CreateMap<UserDto, User>();
+            CreateMap<User, UserDto>();
 
             CreateMap<UserConditionDto, Tip>();
 
             CreateMap<CreateTipDto, Tip>();
-
-            CreateMap<TipCalculator, Tip>();
-
-            CreateMap<TipSearch, Tip>();
 
             CreateMap<Tip, Tip>();
                
