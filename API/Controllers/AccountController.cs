@@ -59,6 +59,11 @@ namespace API.Controllers
                 return NoContent();
             }
 
+            var photoUrl = _uow.PhotoRepository
+                .Find(u => u.Id == user.PhotoId)
+                .FirstOrDefault()
+                .Url;
+
             var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
@@ -93,7 +98,8 @@ namespace API.Controllers
                     Role = userRole,
                     Token = tokenHandler.WriteToken(token),
                     Id = user.Id,
-                    Email = user.Email
+                    Email = user.Email,
+                    PhotoUrl = photoUrl
                 };
 
                 return Ok(userInfo);
