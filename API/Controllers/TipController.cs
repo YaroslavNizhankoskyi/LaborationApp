@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Enterpreneur, Worker")]
     [Route("api/[controller]")]
     [ApiController]
     public class TipController : ControllerBase

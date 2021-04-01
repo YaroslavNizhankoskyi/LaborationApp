@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -96,8 +97,8 @@ namespace API.Services
 
         public bool CreateUserTip(UserConditionDto model, string userId)
         {
-            var laborName = _uow.TipRepository
-               .Find(p => p.LaborFactorId == model.LaborFactorId)
+            var laborName = _uow.FactorRepository
+               .Find(p => p.Id == model.LaborFactorId)
                .FirstOrDefault()
                .Name;
 
@@ -317,11 +318,36 @@ namespace API.Services
 
         public IEnumerable<UserTipDto> GetUserTips(User user)
         {
-            var userTips = _uow.UserTipRepository.Find(p => p.UserId == user.Id);
+            var userTipIds = _uow.UserTipRepository.Find(p => p.UserId == user.Id)
+                .ToList();
 
-            var tips = _mapper.Map<IEnumerable<UserTipDto>>(userTips);
+            ArrayList userTips = new ArrayList();
 
-            return tips;
+            foreach (var tipId in userTipIds) 
+            {
+                var tip = _uow.TipRepository
+                    .Find(u => u.Id == tipId.TipId)
+                    .FirstOrDefault();
+
+                var photoUrl = _uow.PhotoRepository
+                    .Find(u => u.Id == tip.PhotoId)
+                    .FirstOrDefault()
+                    .Url;
+
+                var userTipDto = new UserTipDto
+                {
+                    Id = tipId.Id,
+                    Name = tip.Name,
+                    Text = tip.Text,
+                    Watched = tipId.Watched,
+                    Date = tipId.Date,
+                    PhotoUrl = photoUrl
+                };
+
+                userTips.Add(userTipDto);
+            }
+
+            return userTips.Cast<UserTipDto>();
         }
 
         public bool WatchUserTips(IEnumerable<int> ids)
@@ -382,7 +408,7 @@ namespace API.Services
         {
             var tip = _uow.TipRepository
                 .Find(t => t.FactorHash == hash);
-            return tip == null;
+            return tip != null;
         }
 
         private bool TipExists(int id) 

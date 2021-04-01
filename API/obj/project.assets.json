@@ -629,7 +629,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Collections.dll": {}
         }
       },
       "System.Collections.Concurrent/4.3.0": {
@@ -5819,6 +5819,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.4",
       "Microsoft.IdentityModel.Tokens >= 6.8.0",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 5.0.2",
+      "System.Collections >= 4.3.0",
       "System.Diagnostics.Tools >= 4.3.0",
       "System.IdentityModel.Tokens.Jwt >= 6.8.0"
     ]
@@ -5901,6 +5902,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[5.0.2, )"
+          },
+          "System.Collections": {
+            "target": "Package",
+            "version": "[4.3.0, )"
           },
           "System.Diagnostics.Tools": {
             "target": "Package",
