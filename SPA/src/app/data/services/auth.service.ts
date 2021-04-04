@@ -1,10 +1,12 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { TokenStorageService } from './token-storage.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Register } from '../types/auth/Register';
 import {map} from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { User } from '../types/auth/User';
 
 
 
@@ -15,37 +17,46 @@ const API_URL = environment.apiUrl + "account";
 })
 export class AuthService {
 
-  constructor(private http: HttpClient,
-     private token: TokenStorageService,
-     private toast: ToastrService) { }
+  baseUrl = environment.apiUrl;
+  private currentUserSource = new ReplaySubject<User>(1);
+  currentUser$ = this.currentUserSource.asObservable();
 
-  login(model: Login)
-  {
-      return this.http.post(API_URL + "/login", model).pipe(
-        map((response: any) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('username', response.firstName);
-          localStorage.setItem('role', response.role);
-          localStorage.setItem('userid', response.id);
-          localStorage.setItem('email', response.email);
-          localStorage.setItem('photoUrl', response.photoUrl);
-        })
-      )
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
+
+  login(model: any) {
+    return this.http.post(this.baseUrl + 'account/login', model).pipe(
+      map((response: User) => {
+        const user = response;
+        if (user) {
+          this.setCurrentUser(user);
+        }
+        localStorage.setItem('token', user.token);
+      })
+    )
   }
 
-  register(model: Register)
-  {
-      return this.http.post(API_URL + "/register", model).subscribe( res => {
-        var loginForm = new Login();
-        loginForm.password = model.password;
-        loginForm.email = model.email;
-
-        this.login(loginForm)
-      }, 
-      err => 
-      {
-        this.toast.error(err);
+  register(model: any) {
+    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+      map((user: User) => {
+        if (user) {
+         this.setCurrentUser(user);
+        }
       })
+    )
+  }
+
+  setCurrentUser(user: User) {
+    const decodedToken = this.jwtHelper.decodeToken(user.token);
+    user.role = decodedToken.role;
+    user.id = decodedToken.nameId;
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUserSource.next(user);
+  }
+
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.currentUserSource.next(null);
   }
 
 
