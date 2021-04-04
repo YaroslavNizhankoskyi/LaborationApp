@@ -52,6 +52,8 @@ namespace API
 
             services.AddTransient<ITipService, TipService>();
 
+            services.AddTransient<ITokenService, TokenService>();
+
             services.AddTransient<ITipCalculator, TipCalculator>();
 
             services.AddDbContext<DataContext>(options =>

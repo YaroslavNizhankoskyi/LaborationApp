@@ -26,27 +26,27 @@ namespace API.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-        private readonly IConfiguration _config;
         private SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IPhotoService _photoService;
         private readonly IUnitOfWork _uow;
+        private readonly ITokenService _tokenService;
 
         public AccountController(IUnitOfWork uow,
             IMapper mapper,
             UserManager<User> userManager,
-            IConfiguration config,
             SignInManager<User> signInManager,
             RoleManager<IdentityRole> roleManager,
-            IPhotoService photoService)
+            IPhotoService photoService,
+            ITokenService tokenService)
         {
             _mapper = mapper;
             _userManager = userManager;
-            _config = config;
             _signInManager = signInManager;
             _photoService = photoService;
             _roleManager = roleManager;
             _uow = uow;
+            _tokenService = tokenService;
         }
 
         [HttpPost("login")]
@@ -59,54 +59,28 @@ namespace API.Controllers
                 return NoContent();
             }
 
+            var result = await _signInManager
+                .CheckPasswordSignInAsync(user, model.Password, false);
+
+            if (!result.Succeeded) return Unauthorized();
+
             var photoUrl = _uow.PhotoRepository
                 .Find(u => u.Id == user.PhotoId)
                 .FirstOrDefault()
                 .Url;
 
-            var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-
-            if (result.Succeeded)
+            var userInfo = new UserDto
             {
-                var claims = new[] {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Role, userRole)
-                };
+                FirstName = user.FirstName,
+                Token = await _tokenService.CreateToken(user),
+                Email = user.Email,
+                PhotoUrl = photoUrl
+            };
 
-                var key = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(_config["TokenKey"]));
-
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                var tokenDescriptor = new SecurityTokenDescriptor()
-                {
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.Now.AddDays(1),
-                    SigningCredentials = creds
-                };
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-
-                var userInfo = new UserDto
-                {
-                    FirstName = user.FirstName,
-                    Role = userRole,
-                    Token = tokenHandler.WriteToken(token),
-                    Id = user.Id,
-                    Email = user.Email,
-                    PhotoUrl = photoUrl
-                };
-
-                return Ok(userInfo);
-            }
-
-            return Unauthorized();
+            return Ok(userInfo);
         }
+
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto model)
@@ -116,37 +90,44 @@ namespace API.Controllers
             if ((await _userManager.FindByEmailAsync(user.Email) != null))
                 return BadRequest("User with such email already exists");
 
+            if (!(await _roleManager.RoleExistsAsync(model.Role)))
+            {
+                return BadRequest("No such role");
+            }
+
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                if (!(await _roleManager.RoleExistsAsync(model.Role)))
+                
+                IdentityResult roleResult = await _userManager.AddToRoleAsync(user, model.Role);
+
+                if (!roleResult.Succeeded)
                 {
-                    _userManager.DeleteAsync(user);
-                    return BadRequest("No such role");
+                    return BadRequest(roleResult.Errors);
                 }
 
-                IdentityResult autorize_result = await _userManager.AddToRoleAsync(user, model.Role);
-
-                if (!autorize_result.Succeeded)
-                {
-                    return BadRequest(autorize_result.Errors);
-                }
-
-                if (model.Role == "Enterpreneur") 
+                if (model.Role == "Enterpreneur")
                 {
                     user.Position = "Enterpreneur";
-                    
+
                     var updateResult = await _userManager.UpdateAsync(user);
 
                     if (!updateResult.Succeeded)
                     {
-                        return BadRequest("Error while registering user");    
+                        return BadRequest("Error while registering user");
                     }
-                   
+
                 }
 
-                return Ok("Registered");
+                var userInfo = new UserDto
+                {
+                    FirstName = user.FirstName,
+                    Token = await _tokenService.CreateToken(user),
+                    Email = user.Email
+                };
+
+                return Ok(userInfo);
 
             }
             return BadRequest("Аn error occured");
@@ -162,9 +143,9 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPost("photo")]
-        public async Task<IActionResult> AddPhoto(IFormFile file) 
+        public async Task<IActionResult> AddPhoto(IFormFile file)
         {
-            var user = await  _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
             var result = await _photoService.AddMediumPhotoAsync(file);
 
@@ -178,7 +159,7 @@ namespace API.Controllers
 
             _uow.PhotoRepository.Add(photo);
 
-            if (_uow.Complete()) 
+            if (_uow.Complete())
             {
                 user.PhotoId = photo.Id;
                 var updateResult = await _userManager.UpdateAsync(user);
@@ -186,12 +167,12 @@ namespace API.Controllers
                 {
                     return Ok("User Photo added successfully");
                 }
-                else 
+                else
                 {
                     return BadRequest(updateResult.Errors);
                 }
 
-                
+
 
             }
 
@@ -204,9 +185,9 @@ namespace API.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            var result = await  _photoService.DeletePhotoAsync(publicId);
+            var result = await _photoService.DeletePhotoAsync(publicId);
 
-            if (result.Error != null) 
+            if (result.Error != null)
             {
                 return BadRequest("Error while removing photo");
             }
@@ -215,7 +196,7 @@ namespace API.Controllers
 
             var updateResult = await _userManager.UpdateAsync(user);
 
-            if (updateResult.Succeeded) 
+            if (updateResult.Succeeded)
             {
                 return Ok("Photo removed");
             }
@@ -225,11 +206,11 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetUserAccount(string userId) 
+        public async Task<IActionResult> GetUserAccount(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null) 
+            if (user == null)
             {
                 return BadRequest("No such user");
             }
@@ -254,11 +235,11 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditUser( EditUserDto model) 
+        public async Task<IActionResult> EditUser(EditUserDto model)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            if(user == null) 
+            if (user == null)
             {
                 return BadRequest("No user with such id");
             }
@@ -272,7 +253,7 @@ namespace API.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return Ok("User updated");       
+            return Ok("User updated");
         }
     }
 }
