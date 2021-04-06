@@ -1,5 +1,7 @@
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { AuthService } from './data/services/auth.service';
-import { authInterceptorProviders } from './media/interceptors/auth.interceptor';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -12,6 +14,7 @@ import { LoginComponent } from './layout/auth/login/login/login.component';
 import { RegisterComponent } from './layout/auth/register/register/register.component';
 import { HomeComponent } from './layout/home/home/home.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -24,24 +27,26 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     NavComponent,
-    LoginComponent,
-    RegisterComponent,
     HomeComponent
   ],
   imports: [
+    CoreModule,
     BrowserModule,
     AppRoutingModule,
-    CommonModule,
     HttpClientModule,
+    SharedModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
       },
     }),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [
-    authInterceptorProviders,
-    AuthService
   ],
   bootstrap: [AppComponent]
 })

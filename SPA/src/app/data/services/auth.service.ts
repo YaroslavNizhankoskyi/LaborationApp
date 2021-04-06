@@ -8,8 +8,6 @@ import {map} from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 import { User } from '../types/auth/User';
 
-
-
 const API_URL = environment.apiUrl + "account";
 
 @Injectable({

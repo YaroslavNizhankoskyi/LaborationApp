@@ -11,9 +11,7 @@
     -webkit-overflow-scrolling: touch;
 }
 body, html{
-     height: 100%;
- 	background-repeat: no-repeat;
- 	background:url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg);
+    height: 100%;
  	font-family: 'Oxygen', sans-serif;
 	    background-size: cover;
 }
@@ -60,12 +58,7 @@ input::-webkit-input-placeholder {
 }
 .form-control {
     height: auto!important;
-padding: 8px 12px !important;
-}
-.input-group {
-    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
-    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    padding: 8px 12px !important;
 }
 #button {
     border: 1px solid #ccc;
@@ -92,9 +85,9 @@ padding: 8px 12px !important;
 .main-center{
  	margin-top: 30px;
  	margin: 0 auto;
- 	max-width: 400px;
+ 	width: 400px;
     padding: 10px 40px;
-	background:#009edf;
+	background:#0062cc;
 	    color: #FFF;
     text-shadow: none;
 	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
@@ -103,7 +96,7 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 }
 span.input-group-addon i {
-    color: #009edf;
+    color: #FFF;
     font-size: 17px;
 }
 

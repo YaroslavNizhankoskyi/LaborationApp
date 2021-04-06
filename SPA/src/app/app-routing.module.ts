@@ -4,16 +4,16 @@ import { HomeComponent } from './layout/home/home/home.component';
 import { AuthGuard } from './media/guards/auth.guard';
 
 const routes: Routes = [
-  {path: 'auth', loadChildren: () => import('./modules/auth/auth.module')
-      .then(m => m.AuthModule)},
   {
     path: '',
     runGuardsAndResolvers: 'always',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
-      {path: 'home', component: HomeComponent} 
+      {path: '', component: HomeComponent} 
     ]
-  }
+  },
+  {path: '', loadChildren: () => import('./modules/auth/auth.module')
+  .then(m => m.AuthModule)},
 ];
 
 @NgModule({
