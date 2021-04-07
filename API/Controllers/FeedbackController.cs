@@ -49,6 +49,20 @@ namespace API.Controllers
             return Ok(model);
         }
 
+
+        public async Task<IActionResult> GetNumberOfUnredFeedbacks() 
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var numberOfUnreadFeedbacks = _uow.FeedbackRepository
+                .Find(u => u.UserId == user.Id)
+                .Where(u => u.Watched == false)
+                .Count();
+
+            return Ok(numberOfUnreadFeedbacks);
+
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddFeedback(AddFeedbackDto model) 
         {
