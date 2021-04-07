@@ -350,6 +350,18 @@ namespace API.Services
             return userTips.Cast<UserTipDto>();
         }
 
+        public int GetNumberOfUnreadTips(string userId) 
+        {
+
+            var numberOfUnreadTips = _uow.UserTipRepository
+                .Find(u => u.UserId == userId)
+                .Where(t => t.Watched == false)
+                .Count();
+
+            return numberOfUnreadTips;
+
+        }
+
         public bool WatchUserTips(IEnumerable<int> ids)
         {
             foreach (var tipId in ids)

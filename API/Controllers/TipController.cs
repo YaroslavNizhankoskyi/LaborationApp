@@ -96,6 +96,18 @@ namespace API.Controllers
             return BadRequest("No user tips yet");
         }
 
+        [Authorize(Roles = "Worker")]
+        [HttpGet("user/unread")]
+        public async Task<IActionResult> GetNumberOfUnreadTips() 
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var numberOfUnreadTips = _tipService.GetNumberOfUnreadTips(user.Id);
+
+            return Ok(numberOfUnreadTips);
+
+        }
+
         [Authorize(Roles = "Enterpreneur")]
         [HttpPost("user/{userId}")]
         public async Task<IActionResult> CreateUserTip(UserConditionDto model, string userId) 

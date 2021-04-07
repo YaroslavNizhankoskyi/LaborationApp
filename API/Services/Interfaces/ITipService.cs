@@ -20,6 +20,7 @@ namespace API.Services.Interfaces
         public TipDetailsDto GetTip(int id);
         public IEnumerable<TipDto> GetAll();
         public IEnumerable<UserTipDto> GetUserTips(User user);
+        public int GetNumberOfUnreadTips(string userId);
         public bool CreateUserTip(UserConditionDto model, string userId);
         public bool WatchUserTips(IEnumerable<int> ids);
 
