@@ -7,7 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
+ 
+  unreadFeedbacks: number;
+  unreadTips: number;
+
+  constructor() {
+
+  }
+
+  getNumberOfUnreadTips()
+  {
+
+  }
+
+  getNumberOfUnreadFeedbacks()
+  {
+
+  }
 
   ngOnInit(): void {
   }

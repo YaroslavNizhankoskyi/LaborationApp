@@ -1,7 +1,7 @@
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { SharedModule } from './../../shared/shared.module';
 import { AuthService } from './../../data/services/auth.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './../../layout/auth/register/register/register.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -22,10 +22,10 @@ const routes:Routes = [
   imports: [
     RouterModule.forChild(routes),
     FormsModule,
-    ToastrModule
+    ReactiveFormsModule
   ],
   providers: [
-    AuthService,
+    AuthService
   ]
 })
 export class AuthModule { }

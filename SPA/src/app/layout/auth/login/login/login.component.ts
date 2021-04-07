@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
         res => 
         {
           this.toast.success("Logged in");
-          this.toast.success(localStorage.getItem('token'));
         },
         err => 
         {

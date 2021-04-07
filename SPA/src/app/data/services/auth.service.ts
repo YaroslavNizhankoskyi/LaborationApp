@@ -1,6 +1,6 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Register } from '../types/auth/Register';
@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
 import { User } from '../types/auth/User';
 
-const API_URL = environment.apiUrl + "account";
+const BASE_API = environment.apiUrl + "account";
 
 @Injectable({
   providedIn: 'root'
@@ -58,4 +58,32 @@ export class AuthService {
   }
 
 
+  addPhoto(file: File)
+  {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', `${BASE_API}/photo`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this.http.request(req);
+  }
+
+  removePhoto(id: number)
+  {
+    return this.http.delete(BASE_API + "/photo" + id);
+  }
+
+  getUserAccount(userId: string)
+  {
+    return this.http.get(BASE_API + "/" + userId);
+  }
+
+  editUser(model: any)
+  {
+    return this.http.put(BASE_API, model);
+  }
 }

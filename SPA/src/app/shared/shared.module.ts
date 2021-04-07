@@ -11,6 +11,8 @@ import { AppRoutingModule } from '../app-routing.module';
 
 
 
+
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -37,7 +39,6 @@ export function createTranslateLoader(http: HttpClient) {
       preventDuplicates: true,
     }),
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
   ],
   providers:[
