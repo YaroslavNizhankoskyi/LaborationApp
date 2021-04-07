@@ -49,7 +49,7 @@ namespace API.Controllers
             return Ok(model);
         }
 
-
+        [HttpGet("unread")]
         public async Task<IActionResult> GetNumberOfUnredFeedbacks() 
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
