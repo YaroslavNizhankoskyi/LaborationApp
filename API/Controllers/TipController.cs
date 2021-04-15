@@ -82,7 +82,7 @@ namespace API.Controllers
             return BadRequest("Error while removing tip");
         }
 
-        [Authorize(Roles = "Worker")]
+        [Authorize(Roles = "Worker, Enterpreneur")]
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetUserTips(string userId) 
         {
@@ -108,12 +108,13 @@ namespace API.Controllers
 
         }
 
-        [Authorize(Roles = "Enterpreneur")]
-        [HttpPost("user/{userId}")]
-        public async Task<IActionResult> CreateUserTip(UserConditionDto model, string userId) 
+        [Authorize(Roles = "Worker")]
+        [HttpPost("user")]
+        public async Task<IActionResult> CreateUserTip(UserConditionDto model) 
         {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            if (_tipService.CreateUserTip(model, userId)) return Ok("Created");
+            if (_tipService.CreateUserTip(model, user.Id)) return Ok("Created");
 
             return BadRequest("Operation of adding your tip has been failed");
         }

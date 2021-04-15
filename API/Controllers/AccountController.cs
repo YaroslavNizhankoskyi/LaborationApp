@@ -64,23 +64,25 @@ namespace API.Controllers
 
             if (!result.Succeeded) return Unauthorized();
 
-            var photoUrl = _uow.PhotoRepository
+            var photo = _uow.PhotoRepository
                 .Find(u => u.Id == user.PhotoId)
-                .FirstOrDefault()
-                .Url;
+                .FirstOrDefault();
+
+            var photoUrl = "";
+
+            if (photo != null) photoUrl = photo.Url;
 
             var userInfo = new UserDto
             {
                 FirstName = user.FirstName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
+                Id = user.Id,
                 PhotoUrl = photoUrl
             };
 
             return Ok(userInfo);
         }
-
-
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto model)
@@ -124,7 +126,8 @@ namespace API.Controllers
                 {
                     FirstName = user.FirstName,
                     Token = await _tokenService.CreateToken(user),
-                    Email = user.Email
+                    Email = user.Email,
+                    Id = user.Id
                 };
 
                 return Ok(userInfo);

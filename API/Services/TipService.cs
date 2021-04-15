@@ -329,10 +329,13 @@ namespace API.Services
                     .Find(u => u.Id == tipId.TipId)
                     .FirstOrDefault();
 
-                var photoUrl = _uow.PhotoRepository
+                var photo = _uow.PhotoRepository
                     .Find(u => u.Id == tip.PhotoId)
-                    .FirstOrDefault()
-                    .Url;
+                    .FirstOrDefault();
+
+                var photoUrl = "";
+
+                if (photo != null) photoUrl = photo.Url;
 
                 var userTipDto = new UserTipDto
                 {
@@ -419,7 +422,8 @@ namespace API.Services
         private bool TipExists(string hash)
         {
             var tip = _uow.TipRepository
-                .Find(t => t.FactorHash == hash);
+                .Find(t => t.FactorHash == hash)
+                .FirstOrDefault();
             return tip != null;
         }
 
