@@ -6,30 +6,69 @@ import { NavComponent } from './layout/nav/nav/nav.component';
 import { HomeComponent } from './layout/home/home/home.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
+import { HasRoleDirective } from './media/directives/has-role.directive';
+import { FeedbackService } from './data/services/feedback.service';
+import { TipService } from './data/services/tip.service';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FactorComponent } from './layout/admin/factor/factor/factor.component';
+import { CreateFactorComponent } from './layout/admin/factor/create-factor/create-factor/create-factor.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TipComponent } from './layout/admin/tip/tip/tip/tip.component';
+import { CreateTipComponent } from './layout/admin/tip/create-tip/create-tip/create-tip.component';
+import { EditTipComponent } from './layout/admin/tip/edit-tip/edit-tip/edit-tip.component';
+import { InfoTipComponent } from './layout/admin/tip/info-tip/info-tip/info-tip.component';
 
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    FactorComponent,
+    CreateFactorComponent,
+    TipComponent,
+    CreateTipComponent,
+    EditTipComponent,
+    InfoTipComponent
   ],
   imports: [
+    CommonModule,
+    BrowserModule,
     CoreModule,
     SharedModule,
     AppRoutingModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter
+        tokenGetter: tokenGetter,
+        authScheme: "Bearer ",
+        allowedDomains: ['localhost:44359']
       },
     }),
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
+    NgbModule,
   ],
   providers: [
+    FeedbackService,
+    TipService
   ],
   bootstrap: [AppComponent]
 })

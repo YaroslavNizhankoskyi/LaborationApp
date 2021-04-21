@@ -1,0 +1,8 @@
+<p>factor works!</p>
+<div *ngFor="let factor of factors">
+    <p>{{factor.name}}</p>
+</div>
+
+<select *ngFor="let type of factorTypes">
+    <option [value]="type.index">{{type}}</option>
+</select>

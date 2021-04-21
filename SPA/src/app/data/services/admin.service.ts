@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
-const BASE_API = environment.apiUrl + "admin";
+const BASE_API = environment.apiUrl + "admin/";
 
 
 @Injectable({
@@ -27,7 +27,7 @@ export class AdminService {
     return this.http.post(BASE_API + "roles/" + roleName, model);
   }
 
-  getFactors()
+  getFactors() : any 
   {
     return this.http.get(BASE_API + "factors")
   }

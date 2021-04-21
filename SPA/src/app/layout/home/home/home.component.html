@@ -1,1 +1,10 @@
-<p>home works!</p>
+<div *ngIf="(auth.currentUser$ | async) as user" style="text-align:center;">
+    <div class="container mt-5">
+      <h1>{{ 'HOME.HELLO' | translate}} {{user.firstname}}</h1>
+      <p class="lead">{{ 'HOME.GETTO' | translate}}</p>
+      <div class="text-center">
+        <a class="btn-primary btn-lg btn mr-2">{{ 'HOME.GOTO' | translate}}</a>
+      </div>
+    </div>
+  </div>
+  

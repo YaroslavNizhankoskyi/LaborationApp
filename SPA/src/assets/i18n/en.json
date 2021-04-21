@@ -1,0 +1,42 @@
+{
+    "ADD": "Add",
+    "REMOVE": "Remove",
+    "EDIT": "Edit",
+    "DETAILS": "Info",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Submit",
+    "VIEW": "View",
+    "NAV": 
+    {
+        "HOME": "Home",
+        "TIPS": "Tips",
+        "FEEDBACKS": "Feedbacks",
+        "ADMIN": "Admin",
+        "COMPANY": "Company"
+    },
+    "AUTH":
+    {
+        "LOGOUT": "Logout",
+        "REGISTER":{
+            "REGISTER": "Register",
+            "FIRSTNAME": "First name",
+            "SECONDNAME": "Second name",
+            "EMAIL": "Email",
+            "AGE": "Age",
+            "ROLE": "Role",
+            "PASSWORD": "Password",
+            "CONFIRMPASSWORD": "Confirm Password"
+        },
+        "LOGIN":{
+            "LOGIN": "Login",
+            "EMAIL": "Email",
+            "PASSWORD": "Password"
+        }
+    },
+    "HOME": 
+    {
+        "HELLO": "Hello, valuable worker",
+        "GETTO": "This system is designed to help you control your working stress",
+        "GOTO": "Start your working day"
+    }
+}

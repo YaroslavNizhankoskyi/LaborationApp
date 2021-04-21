@@ -4,124 +4,211 @@
       <h5 class="text-center">Register</h5>
       <form [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="form-group">
-          <label for="name" class="cols-sm-2 control-label"
-            >Your First Name</label
-          >
           <div class="cols-sm-10">
             <div>
               <span class="input-group-addon"
-                ><i class="fa fa-user fa" aria-hidden="true"></i
-              ></span>
+                ><i class="fa fa-user fa mr-2" aria-hidden="true"></i>
+                <label for="name" class="cols-sm-2 control-label"
+                  >Your First Name</label
+                ></span
+              >
               <input
                 type="text"
                 class="form-control"
                 placeholder=""
                 formControlName="firstname"
               />
+              <div
+                class="danger"
+                *ngIf="
+                  registerForm.controls['firstname'].invalid &&
+                  registerForm.controls['firstname'].touched
+                "
+              >
+                Error
+              </div>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="name" class="cols-sm-2 control-label"
-            >Your Second Name</label
-          >
           <div class="cols-sm-10">
             <div>
               <span class="input-group-addon"
-                ><i class="fa fa-user fa" aria-hidden="true"></i
-              ></span>
+                ><i class="fa fa-user fa mr-2" aria-hidden="true"></i>
+                <label for="name" class="cols-sm-2 control-label"
+                  >Your Second Name</label
+                ></span
+              >
               <input
                 type="text"
                 class="form-control"
                 placeholder=""
                 formControlName="secondname"
               />
+              <div
+                class="danger"
+                *ngIf="
+                  registerForm.controls['secondname'].invalid &&
+                  registerForm.controls['secondname'].touched
+                "
+              >
+                Error
+              </div>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="email" class="cols-sm-2 control-label">Your Email</label>
           <div>
             <div>
               <span class="input-group-addon"
-                ><i class="fa fa-envelope fa" aria-hidden="true"></i
-              ></span>
+                ><i class="fa fa-envelope fa mr-2" aria-hidden="true"></i>
+                <label for="email" class="cols-sm-2 control-label"
+                  >Your Email</label
+                >
+              </span>
               <input
                 type="text"
                 class="form-control"
                 placeholder=""
                 formControlName="email"
               />
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <label for="username" class="cols-sm-2 control-label">Username</label>
-          <div class="cols-sm-10">
-            <div>
-              <span class="input-group-addon"
-                ><i class="fa fa-users fa" aria-hidden="true"></i
-              ></span>
-              <input
-                type="text"
-                class="form-control"
-                name="username"
-                id="username"
-                placeholder="Enter your Username"
-              />
+              <div
+                class="danger"
+                *ngIf="
+                  registerForm.controls['email'].invalid &&
+                  registerForm.controls['email'].touched
+                "
+              >
+                Error
+              </div>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="password" class="cols-sm-2 control-label">Password</label>
           <div class="cols-sm-10">
             <div>
               <span class="input-group-addon"
-                ><i class="fa fa-lock fa-lg" aria-hidden="true"></i
-              ></span>
+                ><i class="fa fa-calendar fa-lg mr-2" aria-hidden="true"></i>
+                <label for="password" class="cols-sm-2 control-label"
+                  >Age</label
+                >
+              </span>
+              <input
+                type="number"
+                class="form-control"
+                min="10"
+                max="99"
+                formControlName="age"
+              />
+
+              <div
+                class="danger"
+                *ngIf="
+                  registerForm.controls['age'].invalid &&
+                  registerForm.controls['age'].touched
+                "
+              >
+                Error
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="cols-sm-10">
+            <div>
+              <span class="input-group-addon"
+                ><i class="fa fa-lock fa-lg mr-2" aria-hidden="true"></i>
+                <label for="password" class="cols-sm-2 control-label"
+                  >Password</label
+                >
+              </span>
               <input
                 type="password"
                 class="form-control"
-                name="password"
-                id="password"
-                placeholder="Enter your Password"
+                formControlName="password"
               />
+              <div
+                class="danger"
+                *ngIf="
+                  registerForm.controls['password'].invalid &&
+                  registerForm.controls['password'].touched
+                "
+              >
+                Error
+              </div>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="confirm" class="cols-sm-2 control-label"
-            >Confirm Password</label
-          >
           <div class="cols-sm-10">
             <div>
               <span class="input-group-addon"
-                ><i class="fa fa-lock fa-lg" aria-hidden="true"></i
-              ></span>
+                ><i class="fa fa-lock fa-lg mr-2" aria-hidden="true"></i>
+                <label for="confirm" class="cols-sm-2 control-label"
+                  >Confirm Password</label
+                ></span
+              >
               <input
                 type="password"
                 class="form-control"
-                name="confirm"
-                id="confirm"
-                placeholder="Confirm your Password"
+                formControlName="confirmPassword"
               />
+
+              <label
+                class="bg-danger"
+                *ngIf="
+                  registerForm.controls['confirmPassword'].invalid &&
+                  registerForm.controls['confirmPassword'].touched
+                "
+              >
+                Error
+              </label>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <a
-            href="https://deepak646.blogspot.com/"
-            type="button"
+          <div class="cols-sm-10">
+            <div>
+              <span class="input-group-addon"
+                ><i class="fa fa-users fa-lg mr-2" aria-hidden="true"></i>
+                <label for="password" class="cols-sm-2 control-label"
+                  >Role</label
+                >
+              </span>
+              <select class="form-control" formControlName="role">
+                <option value="Admin">Admin</option>
+                <option value="Enterpreneur">Enterpreneur</option>
+                <option value="Worker">Worker</option>
+              </select>
+
+              <label
+                class="error"
+                *ngIf="
+                  registerForm.controls['role'].invalid &&
+                  registerForm.controls['role'].touched
+                "
+              >
+                Error
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button
+            [disabled]="!registerForm.valid"
+            type="submit"
             id="button"
             class="btn btn-primary btn-lg btn-block login-button"
-            >Register</a
           >
+            Register
+          </button>
         </div>
       </form>
     </div>

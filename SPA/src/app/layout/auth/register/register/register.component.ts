@@ -38,8 +38,8 @@ export class RegisterComponent implements OnInit {
       ]
     ],
     age: ['', [
-      Validators.min(6),
-      Validators.max(100)
+      Validators.min(12),
+      Validators.max(99)
     ]],
     confirmPassword: ['',[
       Validators.required,
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     ]
     ],
     role: ['', [
-      Validators.required
+      Validators.required,
     ]]
   });
 
@@ -67,7 +67,8 @@ export class RegisterComponent implements OnInit {
       this.model = Object.assign({}, this.registerForm.value);
       this.auth.register(this.model).subscribe( () => {
         this.toast.success("Registered");
-      });
+      },
+      err => this.toast.error(err));
     }
   }
 

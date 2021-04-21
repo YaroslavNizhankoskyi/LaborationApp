@@ -14,15 +14,13 @@ const BASE_API = environment.apiUrl + "account";
   providedIn: 'root'
 })
 export class AuthService {
-
-  baseUrl = environment.apiUrl;
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'account/login', model).pipe(
+    return this.http.post(BASE_API + '/login', model).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
@@ -34,7 +32,7 @@ export class AuthService {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+    return this.http.post(BASE_API + '/register', model).pipe(
       map((user: User) => {
         if (user) {
          this.setCurrentUser(user);
