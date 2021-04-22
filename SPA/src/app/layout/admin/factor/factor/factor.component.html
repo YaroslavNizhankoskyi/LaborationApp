@@ -1,8 +1,32 @@
-<p>factor works!</p>
-<div *ngFor="let factor of factors">
-    <p>{{factor.name}}</p>
-</div>
-
-<select *ngFor="let type of factorTypes">
-    <option [value]="type.index">{{type}}</option>
-</select>
+<div class="text-center mt-3">
+    <h2>{{'FACTOR.TITLE'| translate}}</h2>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{{'FACTOR.NAME'| translate}}</th>
+            <th scope="col">{{'FACTOR.TYPE'| translate}}</th>
+            <th scope="col">{{'FACTOR.COEF'| translate}}</th>
+            <th scope="col"> 
+              <p>{{'DRUG.OPTIONS'| translate}}</p>
+              <button class="btn btn-success ml-auto" (click)="factorCreate()">{{'ADD'| translate}}</button>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let factor of factors">
+          <tr>
+            <th scope="row">{{factor.id}}</th>
+            <td>{{factor.name}}</td>
+            <td>{{factorTypes[factor.factorType]}}</td>
+            <td>{{factor.coefficient}}</td>
+            <td >
+              <button class="btn btn-danger" (click)="removeFactor(factor.id, factor.factorType)">{{'REMOVE'| translate}}</button>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

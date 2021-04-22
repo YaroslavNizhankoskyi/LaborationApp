@@ -1,1 +1,50 @@
-<p>create-factor works!</p>
+<div class="modal-header bg-primary text-white">
+  <h4 class="modal-title" id="modal-basic-title">{{ "ADD" | translate }}</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="factor" (ngSubmit)="createFactor()">
+    <label>Name</label>
+    <div class="form-group">
+      <input
+        type="text"
+        required
+
+        class="form-control"
+        placeholder="Name"
+        formControlName="name"
+      />
+    </div>
+    <div class="form-group">
+      <label>FactorType</label>
+      <select
+        type="text"
+        required
+        
+        class="form-control"
+        formControlName="factorType">
+        <option  *ngFor="let type of factorTypes; let i = index" [value]="i">
+          {{type}}
+        </option>
+      </select>
+      
+    </div>
+    <div class="form-group">
+      <label>Coefficient</label>
+      <input
+        type="number"
+        required
+        class="form-control"
+        formControlName="coefficient"
+        max="20"
+        min="1"
+      />
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary mr-2" (click)="modal.dismiss('Cancel')">
+        Cancel
+      </button>
+      <button type="submit" [disabled]="!factor.valid" class="btn btn-success">Add</button>
+    </div>
+  </form>
+</div>

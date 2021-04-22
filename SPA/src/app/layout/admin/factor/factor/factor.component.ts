@@ -2,6 +2,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AdminService } from './../../../../data/services/admin.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateFactorComponent } from '../create-factor/create-factor/create-factor.component';
 
 @Component({
   selector: 'app-factor',
@@ -44,4 +45,27 @@ export class FactorComponent implements OnInit {
 
   }
 
+
+  factorCreate()
+  {
+    const ref = this.modalService.open(CreateFactorComponent, { centered: true, size: 'lg' });
+  }
+
+
+  removeFactor(id: number, typeId: number)
+  {
+    this.adminService.removeFactor(id, typeId).subscribe(
+      res => {
+        this.toast.success("Factor removed")
+      },
+      err => {
+        this.toast.error(err);
+      }
+
+    )
+  }
+
+
 }
+
+

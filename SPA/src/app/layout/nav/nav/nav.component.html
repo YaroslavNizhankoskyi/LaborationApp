@@ -41,13 +41,13 @@
       </div>
 
       <li *ngIf="(auth.currentUser$ | async).role == 'Admin'" class="nav-item">
-        <a class="nav-link" routerLink="/admin/factors">
+        <a class="nav-link" routerLink="/factors">
           <i class="fa fa-cog"></i>
           Factors
         </a>
       </li>
       <li *ngIf="(auth.currentUser$ | async).role == 'Admin'" class="nav-item">
-        <a class="nav-link" routerLink="/admin/tips">
+        <a class="nav-link" routerLink="/tips">
           <i class="fa fa-heart"></i>
           Tips
         </a>

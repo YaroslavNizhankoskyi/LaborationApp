@@ -1,3 +1,6 @@
+import { AddPhotoComponent } from './layout/admin/tip/add-photo/add-photo/add-photo.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { NgModule } from '@angular/core';
@@ -6,7 +9,6 @@ import { NavComponent } from './layout/nav/nav/nav.component';
 import { HomeComponent } from './layout/home/home/home.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
-import { HasRoleDirective } from './media/directives/has-role.directive';
 import { FeedbackService } from './data/services/feedback.service';
 import { TipService } from './data/services/tip.service';
 import { CommonModule } from '@angular/common';
@@ -39,16 +41,24 @@ export function createTranslateLoader(http: HttpClient) {
     FactorComponent,
     CreateFactorComponent,
     TipComponent,
-    CreateTipComponent,
-    EditTipComponent,
+    AddPhotoComponent,
     InfoTipComponent
   ],
+  entryComponents: [
+    CreateFactorComponent,
+    CreateTipComponent,
+    EditTipComponent,
+    InfoTipComponent,
+    AddPhotoComponent
+  ],
   imports: [
+    BrowserAnimationsModule,
     CommonModule,
     BrowserModule,
     CoreModule,
     SharedModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

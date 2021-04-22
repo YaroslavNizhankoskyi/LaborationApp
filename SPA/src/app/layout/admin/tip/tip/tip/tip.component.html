@@ -1,1 +1,37 @@
-<p>tip works!</p>
+<div class="text-center mt-3">
+    <h2>{{'TIP.TITLE'| translate}}</h2>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{{'TIP.NAME'| translate}}</th>
+            <th scope="col">{{'FACTOR.COEF'| translate}}</th>
+            <th scope="col">{{'TIP.PHOTO'| translate}}</th>
+
+            <th scope="col"> 
+              <p>{{'TIP.OPTIONS'| translate}}</p>
+              <button class="btn btn-success ml-auto" (click)="createTip()">{{'ADD'| translate}}</button>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let tip of tips">
+          <tr>
+            <th scope="row">{{tip.id}}</th>
+            <td>{{tip.name}}</td>
+            <td>{{tip.coefficientSum}}</td>
+            <td>{{tip.photoUrl}}</td>
+            <td >
+              <button class="btn btn-danger mr-2" (click)="removeTip(tip.id)">{{'REMOVE'| translate}}</button>
+              <button class="btn btn-warning mr-2" (click)="editTip(tip.id)">{{'EDIT'| translate}}</button>
+              <button class="btn btn-info mr-2" (click)="infoTip(tip.id)">{{'INFO'| translate}}</button>
+              <button class="btn btn-success mr-2" (click)="addPhoto(tip.id)">{{'TIP.ADDPHOTO'| translate}}</button>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

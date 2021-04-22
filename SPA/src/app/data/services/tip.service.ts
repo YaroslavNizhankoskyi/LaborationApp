@@ -21,6 +21,11 @@ export class TipService {
     return this.http.post(BASE_API, model);
   }
 
+  getTip(id: number)
+  {
+    return this.http.get(BASE_API + "/" + id);
+  }
+
   editTip(model: any)
   {
     return this.http.put(BASE_API, model);

@@ -37,8 +37,8 @@ export class AdminService {
     return this.http.post(BASE_API + "factors", model)
   }
 
-  removeFactor(id: number)
+  removeFactor(id: number, typeId: number)
   {
-    return this.http.delete(BASE_API + "factors/" + id);
+    return this.http.delete(BASE_API + "factors/" + id + "/" + typeId);
   }
 }
