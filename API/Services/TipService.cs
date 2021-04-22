@@ -307,12 +307,53 @@ namespace API.Services
                 .Find(u => u.Id == tip.SleepFactorId)
                 .FirstOrDefault();
 
-            var model = _mapper.Map<TipDetailsDto>(tip);
-            model.HealthFactor = _mapper.Map<FactorDto>(hfac);
-            model.MentalFactor = _mapper.Map<FactorDto>(mfac);
-            model.LaborFactor = _mapper.Map<FactorDto>(lfac);
-            model.SleepFactor = _mapper.Map<FactorDto>(sfac);
+            var model = new TipDetailsDto
+            {
+                Name = tip.Name,
+                Text = tip.Text,
+                CoefficientSum = tip.CoefficientSum
+            };
+            if (hfac != null)
+            {
+                model.HealthFactor = new FactorDto
+                {
+                    Id = hfac.Id,
+                    Coefficient = hfac.Coefficient,
+                    Name = hfac.Name,
+                    FactorType = hfac.FactorTypeId
+                };
+            }
+            if (mfac != null)
+            {
+                model.MentalFactor = new FactorDto
+                {
+                    Id = mfac.Id,
+                    Coefficient = mfac.Coefficient,
+                    Name = mfac.Name,
+                    FactorType = mfac.FactorTypeId
+                };
+            }
+            if (lfac != null)
+            {
+                model.LaborFactor = new FactorDto
+                {
+                    Id = lfac.Id,
+                    Coefficient = lfac.Coefficient,
+                    Name = lfac.Name,
+                    FactorType = lfac.FactorTypeId
+                };
+            }
 
+            if (sfac != null)
+            {
+                model.SleepFactor = new FactorDto
+                {
+                    Id = sfac.Id,
+                    Coefficient = sfac.Coefficient,
+                    Name = sfac.Name,
+                    FactorType = sfac.FactorTypeId
+                };
+            }
             return model;
         }
 

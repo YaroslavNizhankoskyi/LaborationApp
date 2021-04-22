@@ -39,13 +39,13 @@ namespace API.Models
 
         public bool CanDelete { get; set; }
 
-        public Factor HealthFactor { get; set; }
+        public Factor? HealthFactor { get; set; }
 
-        public Factor MentalFactor { get; set; }
+        public Factor? MentalFactor { get; set; }
 
-        public Factor SleepFactor { get; set; }
+        public Factor? SleepFactor { get; set; }
 
-        public Factor LaborFactor { get; set; }
+        public Factor? LaborFactor { get; set; }
 
         public IEnumerable<UserTip> UserTips{ get; set; }
 

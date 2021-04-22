@@ -45,6 +45,16 @@ namespace API.Controllers
             return BadRequest("No tips has been found");
         }
 
+        [HttpGet("{tipId}")]
+        public IActionResult GetTip(int tipId) 
+        {
+            var tip = _tipService.GetTip(tipId);
+
+            if (tip == null) return BadRequest();
+
+            return Ok(tip);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateTip(CreateTipDto model) 
         {

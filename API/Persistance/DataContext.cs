@@ -62,26 +62,26 @@ namespace API.Persistance
                 .HasMany(c => c.HealthTips)
                 .WithOne(c => c.HealthFactor)
                 .HasForeignKey(c => c.HealthFactorId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<Factor>()
                 .HasMany(c => c.MentalTips)
                 .WithOne(c => c.MentalFactor)
                 .HasForeignKey(c => c.MentalFactorId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.SetNull);
 
 
             builder.Entity<Factor>()
                 .HasMany(c => c.SleepTips)
                 .WithOne(c => c.SleepFactor)
                 .HasForeignKey(c => c.SleepFactorId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<Factor>()
                 .HasMany(c => c.LaborTips)
                 .WithOne(c => c.LaborFactor)
                 .HasForeignKey(c => c.LaborFactorId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<Company>()
                 .HasMany(c => c.Workers)
@@ -96,7 +96,6 @@ namespace API.Persistance
 
             
 
-
             builder.Entity<User>()
                 .HasMany(c => c.UserCharacteristics)
                 .WithOne(c => c.User)
@@ -108,7 +107,7 @@ namespace API.Persistance
                 .HasMany(c => c.UserTips)
                 .WithOne(c => c.Tip)
                 .HasForeignKey(c => c.TipId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction); 
 
                base.OnModelCreating(builder);
 

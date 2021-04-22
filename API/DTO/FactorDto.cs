@@ -9,7 +9,7 @@ namespace API.DTO
     {
         public int Id { get; set; }
 
-        public string FactorType { get; set; }
+        public int FactorType { get; set; }
 
         public string Name { get; set; }
 

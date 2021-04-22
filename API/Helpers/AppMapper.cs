@@ -13,11 +13,12 @@ namespace API.Helpers
 
         public AppMapper()
         {
+            CreateMap<Tip, TipDetailsDto>();
             CreateMap<FactorDto, Factor>();
 
             CreateMap<Tip, TipDto>();
 
-            CreateMap<Tip, TipDetailsDto>();
+            CreateMap<TipDetailsDto, Tip>();
 
             CreateMap<Feedback, FeedbackInfoDto>();
 
@@ -30,6 +31,8 @@ namespace API.Helpers
             CreateMap<User, User>();
 
             CreateMap<User, UserDto>();
+            CreateMap<Tip, TipDetailsDto>();
+            CreateMap<Tip, TipDetailsDto>();
 
             CreateMap<UserConditionDto, Tip>();
 
@@ -44,6 +47,14 @@ namespace API.Helpers
             CreateMap<CreateFactorDto, Factor>()
                 .ForMember(p => p.FactorTypeId, s => s
                 .MapFrom( x => x.FactorType));
+
+            CreateMap<Tip, TipDetailsDto>();
+            CreateMap<Tip, TipDetailsDto>();
+            CreateMap<Tip, TipDetailsDto>();
+            CreateMap<Tip, TipDetailsDto>();
+            CreateMap<Tip, TipDetailsDto>();
+            CreateMap<Tip, TipDetailsDto>();
+
         }
     }
 }

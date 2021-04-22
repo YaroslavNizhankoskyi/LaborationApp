@@ -27,19 +27,22 @@ namespace API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly ITipService _tipService;
+        private readonly ITipCalculator _tipCalculator;
 
 
         public AdminController(IUnitOfWork unitOfWork,
             RoleManager<IdentityRole> roleManager,
             UserManager<User> userManager,
             IMapper mapper,
-            ITipService tipService)
+            ITipService tipService,
+            ITipCalculator tipCalculator)
         {
             _uow = unitOfWork;
             _roleManager = roleManager;
             _userManager = userManager;
             _mapper = mapper;
             _tipService = tipService;
+            _tipCalculator = tipCalculator;
         }
 
         [HttpGet("roles")]
@@ -158,8 +161,8 @@ namespace API.Controllers
         }
 
 
-        [HttpDelete("factors/{id}")]
-        public IActionResult RemoveFactor(int id) 
+        [HttpDelete("factors/{id}/{typeId}")]
+        public IActionResult RemoveFactor(int id, int typeId) 
         {
             var factor = _uow.FactorRepository.GetById(id);
 
@@ -167,9 +170,58 @@ namespace API.Controllers
             {
                 if (!_tipService.RemoveBaseTip(factor)) return BadRequest("Error while removing factor");
 
+                var relientTips = new List<Tip>();
+                switch (typeId) 
+                {
+                    case 0:
+                        relientTips = _uow.TipRepository
+                        .Find(p => p.HealthFactorId == id)
+                        .ToList();
+
+                        foreach (var tip in relientTips)
+                        {
+                            tip.HealthFactorId = null;
+                            tip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(tip).Value;
+                        }
+                        break;
+                    case 1:
+                        relientTips = _uow.TipRepository
+                        .Find(p => p.MentalFactorId == id)
+                        .ToList();
+                        foreach (var tip in relientTips)
+                        {
+                            tip.MentalFactorId = null;
+                            tip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(tip).Value;
+                        }
+                        break;
+                    case 2:
+                        relientTips = _uow.TipRepository
+                        .Find(p => p.SleepFactorId == id)
+                        .ToList();
+                        foreach (var tip in relientTips)
+                        {
+                            tip.SleepFactorId = null;
+                            tip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(tip).Value;
+                        }
+                        break;
+                    case 3:
+                        relientTips = _uow.TipRepository
+                        .Find(p => p.LaborFactorId == id)
+                        .ToList();
+                        foreach (var tip in relientTips)
+                        {
+                            tip.LaborFactorId = null;
+                            tip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(tip).Value;
+                        }
+                        break;
+                }
+
+                _uow.Complete();
+
+
                 _uow.FactorRepository.Remove(factor);
 
-                if(_uow.Complete()) return Ok("Removed");
+                if(_uow.Complete()) return Ok();
             }
 
             return NotFound("No such factor");

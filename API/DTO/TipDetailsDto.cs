@@ -5,8 +5,16 @@ using System.Threading.Tasks;
 
 namespace API.DTO
 {
-    public class TipDetailsDto : TipDto
+    public class TipDetailsDto
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string PhotoUrl { get; set; }
+
+        public int CoefficientSum { get; set; }
+
         public string Text { get; set; }
 
         public FactorDto HealthFactor { get; set; }

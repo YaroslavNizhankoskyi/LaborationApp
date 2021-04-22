@@ -49,7 +49,7 @@ namespace API.Services
 
             var coefficient = 0;
 
-            if (tip.HealthFactorId != 0)
+            if (tip.HealthFactorId.HasValue)
             {
                 coefficient += _uow.FactorRepository
                     .Find(p => p.Id == tip.HealthFactorId)
@@ -57,7 +57,7 @@ namespace API.Services
                     .Coefficient;
             }
 
-            if (tip.MentalFactorId != 0)
+            if (tip.MentalFactorId.HasValue)
             {
                 coefficient += _uow.FactorRepository
                     .Find(p => p.Id == tip.MentalFactorId)
@@ -65,7 +65,7 @@ namespace API.Services
                     .Coefficient;
             }
 
-            if (tip.SleepFactorId != 0)
+            if (tip.SleepFactorId.HasValue)
             {
                 coefficient += _uow.FactorRepository
                     .Find(p => p.Id == tip.SleepFactorId)
@@ -73,7 +73,7 @@ namespace API.Services
                     .Coefficient;
             }
 
-            if (tip.LaborFactorId != 0)
+            if (tip.LaborFactorId.HasValue)
             {
                 coefficient += _uow.FactorRepository
                     .Find(p => p.Id == tip.LaborFactorId)
@@ -86,10 +86,10 @@ namespace API.Services
 
         public bool CanCalcualate(Tip tip)
         {
-           if (tip.LaborFactorId == 0
-               && tip.HealthFactorId == 0
-               && tip.MentalFactorId == 0
-               && tip.SleepFactorId == 0)
+           if (tip.LaborFactorId.HasValue
+               && tip.HealthFactorId.HasValue
+               && tip.MentalFactorId.HasValue
+               && tip.SleepFactorId.HasValue)
             {
                 return false;
             }
