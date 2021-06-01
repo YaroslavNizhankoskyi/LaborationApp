@@ -87,14 +87,14 @@ namespace API.Services
         public bool CanCalcualate(Tip tip)
         {
            if (tip.LaborFactorId.HasValue
-               && tip.HealthFactorId.HasValue
-               && tip.MentalFactorId.HasValue
-               && tip.SleepFactorId.HasValue)
+               || tip.HealthFactorId.HasValue
+               || tip.MentalFactorId.HasValue
+               || tip.SleepFactorId.HasValue)
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }

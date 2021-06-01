@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
@@ -120,6 +120,7 @@ namespace API.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpGet("factors")]
         public async Task<IActionResult> GetFactors([FromQuery] FactorParams factorParams) 
         {
@@ -182,6 +183,7 @@ namespace API.Controllers
                         {
                             tip.HealthFactorId = null;
                             tip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(tip).Value;
+                            tip.FactorHash = _tipService.GetTipHash(tip);
                         }
                         break;
                     case 1:
@@ -192,8 +194,10 @@ namespace API.Controllers
                         {
                             tip.MentalFactorId = null;
                             tip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(tip).Value;
+                            tip.FactorHash = _tipService.GetTipHash(tip);
                         }
                         break;
+
                     case 2:
                         relientTips = _uow.TipRepository
                         .Find(p => p.SleepFactorId == id)
@@ -202,6 +206,7 @@ namespace API.Controllers
                         {
                             tip.SleepFactorId = null;
                             tip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(tip).Value;
+                            tip.FactorHash = _tipService.GetTipHash(tip);
                         }
                         break;
                     case 3:
@@ -212,6 +217,7 @@ namespace API.Controllers
                         {
                             tip.LaborFactorId = null;
                             tip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(tip).Value;
+                            tip.FactorHash = _tipService.GetTipHash(tip);
                         }
                         break;
                 }

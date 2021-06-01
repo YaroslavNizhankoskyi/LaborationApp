@@ -24,6 +24,8 @@ namespace API.Services.Interfaces
         public bool CreateUserTip(UserConditionDto model, string userId);
         public bool WatchUserTips(IEnumerable<int> ids);
 
+        public string GetTipHash(Tip tip);
+
 
     }
 }

@@ -1,54 +1,54 @@
 <div class="modal-header bg-primary text-white">
-    <h4 class="modal-title" id="modal-basic-title">{{ "ADD" | translate }}</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{ "INFO" | translate }}</h4>
   </div>
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label>Name</label>
-        <h3>
+        <label>{{ "TIP.NAME" | translate }}</label>
+        <h5>
             {{tip.name}}
-        </h3>
+        </h5>
       </div>
       <div class="form-group">
-        <label>Coefficient Sum</label>
-        <h3>
+        <label>{{ "TIP.COEFSUM" | translate }}</label>
+        <h5>
             {{tip.coefficientSum}}
-        </h3>
+        </h5>
       </div>
       <div class="form-group">
-        <label>Text</label>
-        <h3>
+        <label>{{ "TIP.TEXT" | translate }}</label>
+        <h5>
             {{tip.text}}
-        </h3>
+        </h5>
       </div>
       <div class="form-group" *ngIf="tip.healthFactor != null">
-        <label>Health Factor</label>
-        <h3>
+        <label>{{ "TIP.HELATHF" | translate }}</label>
+        <h5>
             {{tip.healthFactor.name}}
-        </h3>
+        </h5>
       </div>
       <div class="form-group" *ngIf="tip.mentalFactor != null">
-        <label>mental Factor</label>
-        <h3>
+        <label>{{ "TIP.MENTALf" | translate }}</label>
+        <h5>
             {{tip.mentalFactor.name}}
-        </h3>
+        </h5>
       </div>
       <div class="form-group" *ngIf="tip.sleepFactor != null">
-        <label>Sleep Factor</label>
-        <h3>
+        <label>{{ "TIP.SLEEPF" | translate }}</label>
+        <h5>
             {{tip.sleepFactor.name}}
-        </h3>
+        </h5>
       </div>
       <div class="form-group" *ngIf="tip.laborFactor != null">
-        <label>Labor Factor</label>
-        <h3>
+        <label>{{ "TIP.LABORF" | translate }}</label>
+        <h5>
             {{tip.laborFactor.name}}
-        </h3>
+        </h5>
       </div>
   
       <div class="modal-footer">
         <button class="btn btn-primary mr-2" (click)="modal.dismiss('Cancel')">
-          Close
+          {{ "CLOSE" | translate }}
         </button>
       </div>
     </form>

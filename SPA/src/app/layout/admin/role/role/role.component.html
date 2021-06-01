@@ -1,0 +1,61 @@
+<div class="container">
+    <div
+      class="row border-top-1 border-left-1 border-right-1 justify-content-center pt-5 pb-5"
+    >
+      <div class="example-container">
+        <h2>{{ 'ROLE.ADMINS' | translate}}</h2>
+  
+        <div
+          cdkDropList
+          #adminList="cdkDropList"
+          [cdkDropListData]="administrators"
+          [cdkDropListConnectedTo]="[workersList, enterpreneursList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="example-box" *ngFor="let item of administrators" cdkDrag>
+            {{ item }}
+          </div>
+        </div>
+      </div>
+  
+      <div class="example-container">
+        <h2>{{ 'ROLES.WORKERS' | translate}}</h2>
+  
+        <div
+          cdkDropList
+          #workersList="cdkDropList"
+          [cdkDropListData]="workers"
+          [cdkDropListConnectedTo]="[adminList, enterpreneursList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="example-box" *ngFor="let item of workers" cdkDrag>
+            {{ item }}
+          </div>
+        </div>
+      </div>
+  
+      <div class="example-container">
+        <h2>{{ 'ROLES.ENTERPRENEURS' | translate}}</h2>
+  
+        <div
+          cdkDropList
+          #enterpreneursList="cdkDropList"
+          [cdkDropListData]="enterpreneurs"
+          [cdkDropListConnectedTo]="[adminList, workersList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="example-box" *ngFor="let item of enterpreneurs" cdkDrag>
+            {{ item }}
+          </div>
+        </div>
+      </div>
+  
+      <div class="row  justify-content-center pt-5 pb-5">
+        <button class="btn btn-lg btn-success" (click)="editUsersInRole()">{{'SUBMIT'| translate}}</button>
+      </div>
+    </div>
+  </div>
+  

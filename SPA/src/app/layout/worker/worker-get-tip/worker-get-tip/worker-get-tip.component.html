@@ -1,0 +1,62 @@
+<div class="modal-header bg-primary text-white">
+  <h4 class="modal-title" id="modal-basic-title">{{ "ADD" | translate }}</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="tipModel" >
+   
+  
+
+    <div class="form-group">
+      <label>Health Factor Id</label>
+      <select          
+        class="form-control"
+        formControlName="healthFactorId">
+        <option *ngFor="let factor of healthFactors" [value]="factor.id">
+          {{factor.name}}
+        </option>
+      </select>   
+    </div>
+
+    <div class="form-group">
+      <label>Mental Factor Id</label>
+      <select          
+        class="form-control"
+        formControlName="mentalFactorId">  
+        <option *ngFor="let factor of mentalFactors" [value]="factor.id" >
+          {{factor.name}}
+        </option>
+      </select>   
+    </div>
+
+    <div class="form-group">
+      <label>Sleep Factor Id</label>
+      <select          
+        class="form-control"
+        formControlName="sleepFactorId">
+        <option *ngFor="let factor of sleepFactors" [value]="factor.id">
+          {{factor.name}}
+        </option>
+      </select>   
+    </div>
+
+    <div class="form-group">
+      <label>Labor Factor Id</label>
+      <select          
+        class="form-control"
+        formControlName="laborFactorId">
+        <option *ngFor="let factor of laborFactors" [value]="factor.id">
+          {{factor.name}}
+        </option>
+      </select>   
+    </div>
+   
+
+    <div class="modal-footer">
+      <button class="btn btn-primary mr-2" (click)="modal.dismiss('Cancel')">
+        Cancel
+      </button>
+      <button type="submit" (click)="getTip()" [disabled]="!tipModel.valid" 
+      class="btn btn-success">{{ "ADD" | translate}}</button>
+    </div>
+  </form>
+</div>

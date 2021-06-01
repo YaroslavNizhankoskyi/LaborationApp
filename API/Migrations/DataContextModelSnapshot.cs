@@ -561,7 +561,7 @@ namespace API.Migrations
                     b.HasOne("API.Models.Tip", "Tip")
                         .WithMany("UserTips")
                         .HasForeignKey("TipId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Models.User", "User")

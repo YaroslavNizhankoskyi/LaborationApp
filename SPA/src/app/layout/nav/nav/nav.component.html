@@ -17,39 +17,46 @@
       *ngIf="(auth.currentUser$ | async) !== null"
       class="navbar-nav mr-auto text-left"
     >
-      <li class="nav-item active">
-        <a class="nav-link" href="#">
-          <i class="fa fa-home"></i>
-          Home
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
+    <li class="nav-item active">
+      <a class="nav-link" href="#">
+        <i class="fa fa-home"></i>
+        {{ "NAV.HOME" | translate}}
+        <span class="sr-only">(current)</span>
+      </a>
+    </li>
+    <li class="nav-item"  *ngIf="(auth.currentUser$ | async).role == 'Worker'">
+      <a class="nav-link" routerLink="/worker-tips">
+        <i class="fa fa-heart"></i>
+        {{ "NAV.TIPS" | translate}}
+      </a>
+    </li>
+    <li class="nav-item"  *ngIf="(auth.currentUser$ | async).role == 'Worker'">
+      <a class="nav-link" routerLink="/feedbacks">
+        <i class="fa fa-comment"></i>
+        {{ "NAV.FEEDBACKS" | translate}}
+      </a>
+    </li>
+      <div>
+        
 
-      <div *ngIf="(auth.currentUser$ | async).role == 'Worker'">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/tips">
-            <i class="fa fa-heart"></i>
-            Tips
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/feedbacks">
-            <i class="fa fa-comment"></i>
-            Feedbacks
-          </a>
-        </li>
       </div>
 
       <li *ngIf="(auth.currentUser$ | async).role == 'Admin'" class="nav-item">
         <a class="nav-link" routerLink="/factors">
           <i class="fa fa-cog"></i>
-          Factors
+          {{ "NAV.FACTORS" | translate}}
         </a>
       </li>
       <li *ngIf="(auth.currentUser$ | async).role == 'Admin'" class="nav-item">
         <a class="nav-link" routerLink="/tips">
           <i class="fa fa-heart"></i>
-          Tips
+          {{ "NAV.TIPS" | translate}}
+        </a>
+      </li>
+      <li *ngIf="(auth.currentUser$ | async).role == 'Admin'" class="nav-item">
+        <a class="nav-link" routerLink="/roles">
+          <i class="fa fa-users"></i>
+          {{ "NAV.ROLES" | translate}}
         </a>
       </li>
 
@@ -57,13 +64,13 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/company">
             <i class="fa fa-building"></i>
-            Company
+            {{ "NAV.COMPANY" | translate}}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/company/feedbacks">
             <i class="fa fa-comment"></i>
-            Feedbacks
+            {{ "NAV.FEEDBACKS" | translate}}
           </a>
         </li>
       </div>
@@ -92,13 +99,13 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/register">
             <i class="fa fa-user"> </i>
-            Register
+            {{ "AUTH.REGISTER.REGISTER" | translate}}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/login">
             <i class="fa fa-sign-in"> </i>
-            Sign In
+            {{ "AUTH.LOGIN.LOGIN" | translate}}
           </a>
         </li>
       </ul>
@@ -110,7 +117,7 @@
       <li class="nav-item">
         <button (click)="logout()">
           <i class="fa fa-sign-out"> </i>
-          Log out
+          {{ "AUTH.LOGOUT" | translate}}
         </button>
       </li>
     </ul>

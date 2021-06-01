@@ -107,7 +107,7 @@ namespace API.Persistance
                 .HasMany(c => c.UserTips)
                 .WithOne(c => c.Tip)
                 .HasForeignKey(c => c.TipId)
-                .OnDelete(DeleteBehavior.NoAction); 
+                .OnDelete(DeleteBehavior.Cascade); 
 
                base.OnModelCreating(builder);
 

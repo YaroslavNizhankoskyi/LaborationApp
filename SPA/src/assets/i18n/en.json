@@ -12,7 +12,9 @@
         "TIPS": "Tips",
         "FEEDBACKS": "Feedbacks",
         "ADMIN": "Admin",
-        "COMPANY": "Company"
+        "COMPANY": "Company",
+        "FACTORS": "Factors",
+        "ROLES":"Roles"
     },
     "AUTH":
     {
@@ -38,5 +40,38 @@
         "HELLO": "Hello, valuable worker",
         "GETTO": "This system is designed to help you control your working stress",
         "GOTO": "Start your working day"
+    },
+    "WORKER":{
+        "TIPS":{
+            "NOTIPS": "It seems like, you have no tips yet...",
+            "TRY": "Get tip"
+        }
+    },
+    "FACTOR": {
+        "TITLE": "Factors",
+        "NAME": "Name",
+        "TYPE": "Type",
+        "COEF": "Coefficient",
+        "OPTIONS":"Options" 
+    },
+    "TIP": {
+        "TITLE": "Tips",
+        "NAME": "Name",
+        "TYPE": "Type",
+        "COEF": "Coefficient",
+        "OPTIONS":"Options",
+        "PHOTO": "Photo",
+        "ADDPHOTO": "Add Photo",
+        "COEFSUM": "Coefficient sum",
+        "TEXT": "Text",
+        "HEALTHF": "Health factor",
+        "MENTALF": "Mental  factor",
+        "SLEEPF": "Sleep  factor",
+        "LABORF": "Labor  factor"
+    },
+    "ROLES":{
+        "WORKERS":"Workers",
+        "ADMINS":"Admins",
+        "ENTERPRENEURS":"Enterpreneurs"
     }
 }

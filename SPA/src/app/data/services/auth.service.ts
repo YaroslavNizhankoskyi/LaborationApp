@@ -44,7 +44,8 @@ export class AuthService {
   setCurrentUser(user: User) {
     const decodedToken = this.jwtHelper.decodeToken(user.token);
     user.role = decodedToken.role;
-    user.id = decodedToken.nameId;
+    user.id = decodedToken.nameid;
+    console.log(user);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }

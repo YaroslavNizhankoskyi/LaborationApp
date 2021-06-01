@@ -1,3 +1,4 @@
+import { WorkerGuard } from './media/guards/worker.guard';
 import { AdminGuard } from './media/guards/admin.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -19,9 +20,15 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    //canActivate:[AdminGuard],
+    canActivate:[AdminGuard],
     loadChildren: () => import('./modules/admin/admin.module')
     .then(m => m.AdminModule)
+  },
+  {
+    path: 'worker',
+    canActivate: [WorkerGuard],
+    loadChildren: () => import('./modules/worker/worker.module')
+    .then(m => m.WorkerModule)
   }
 ];
 

@@ -1,0 +1,15 @@
+<div  style="text-align:center;">
+  <div *ngIf="userTips.length == 0" class="container mt-5">
+    <h1>{{"WORKER.TIPS.NOTIPS" | translate}}</h1>
+    <p>Try getting a tip</p>
+  </div>
+  <div *ngIf="userTips.length > 0">
+    <p *ngFor="let tip of userTips">
+      Name: {{tip.name}} Text: {{tip.text}}
+    </p>
+  </div>
+
+  <button class="btn btn-lg btn-success" (click)="getTip()">
+    {{"WORKER.TIPS.TRY" | translate}}
+  </button>
+</div>

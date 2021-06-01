@@ -11,12 +11,13 @@ namespace API.DTO
         public string Name { get; set; }
 
         public string Text { get; set; }
-        public int HealthFactorId { get; set; }
 
-        public int MentalFactorId { get; set; }
+        public int? HealthFactorId { get; set; }
 
-        public int SleepFactorId { get; set; }
+        public int? MentalFactorId { get; set; }
 
-        public int LaborFactorId { get; set; }
+        public int? SleepFactorId { get; set; }
+
+        public int? LaborFactorId { get; set; }
     }
 }

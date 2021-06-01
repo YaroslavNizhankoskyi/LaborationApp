@@ -97,10 +97,15 @@ namespace API.Services
 
         public bool CreateUserTip(UserConditionDto model, string userId)
         {
-            var laborName = _uow.FactorRepository
+            var laborName = "Hasn't been specified";
+            var laborFactor = _uow.FactorRepository
                .Find(p => p.Id == model.LaborFactorId)
-               .FirstOrDefault()
-               .Name;
+               .FirstOrDefault();
+            if (laborFactor != null) 
+            {
+                laborName = laborFactor.Name;
+            }
+                         
 
             var tip = _mapper.Map<Tip>(model);
 
@@ -250,22 +255,29 @@ namespace API.Services
 
         public Tip EditTip(EditTipDto model)
         {
-            if (!TipExists(model.Id)) return null;
 
             var tip = _mapper.Map<Tip>(model);
+            tip.Id = model.Id;
 
             var tipHash = GetTipHash(tip);
 
-            if (TipExists(tipHash)) return null;
+
+            var tipByHashFromDb = _uow.TipRepository
+                .Find(t => t.FactorHash == tipHash)
+                .FirstOrDefault();
 
             var tipFromDb = _uow.TipRepository
                 .Find(p => p.Id == tip.Id)
                 .FirstOrDefault();
 
-            var updatedTip = _mapper.Map(tipHash, tipFromDb);
+            if (tipByHashFromDb != null && tipFromDb.Id != tipByHashFromDb.Id)
+            {
+                return null;
+            }
 
-            _uow.TipRepository
-                .Add(updatedTip);
+            var updatedTip = _mapper.Map(tip, tipFromDb);
+            updatedTip.CoefficientSum = _tipCalculator.CalculateTipCoefficient(updatedTip).Value;
+            updatedTip.CanDelete = true;
 
             if (_uow.Complete()) return updatedTip;
 
@@ -309,10 +321,13 @@ namespace API.Services
 
             var model = new TipDetailsDto
             {
+                Id = tip.Id,
                 Name = tip.Name,
                 Text = tip.Text,
                 CoefficientSum = tip.CoefficientSum
             };
+
+
             if (hfac != null)
             {
                 model.HealthFactor = new FactorDto
@@ -423,7 +438,7 @@ namespace API.Services
             return _uow.Complete();
         }
 
-        private string GetTipHash(Tip tip)
+        public string GetTipHash(Tip tip)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(tip.HealthFactorId);
@@ -478,39 +493,44 @@ namespace API.Services
 
         private Tip GetTipBySingleFactor(Tip tip)
         {
+            Tip tipFromDb = null;
             if (tip.HealthFactorId.HasValue)
             {
                 var hash = GetBaseTipHash(tip.HealthFactorId.Value);
-                return _uow.TipRepository
+                tipFromDb = _uow.TipRepository
                     .Find(u => u.FactorHash == hash)
                     .FirstOrDefault();
+                return tipFromDb;
             }
 
             if (tip.MentalFactorId.HasValue)
             {
                 var hash = GetBaseTipHash(tip.MentalFactorId.Value);
-                return _uow.TipRepository
+                tipFromDb = _uow.TipRepository
                     .Find(u => u.FactorHash == hash)
                     .FirstOrDefault();
+                return tipFromDb;
             }
 
             if (tip.SleepFactorId.HasValue)
             {
                 var hash = GetBaseTipHash(tip.SleepFactorId.Value);
-                return _uow.TipRepository
+                tipFromDb = _uow.TipRepository
                     .Find(u => u.FactorHash == hash)
                     .FirstOrDefault();
+                return tipFromDb;
             }
 
             if (tip.LaborFactorId.HasValue)
             {
                 var hash = GetBaseTipHash(tip.LaborFactorId.Value);
-                return _uow.TipRepository
+                tipFromDb = _uow.TipRepository
                     .Find(u => u.FactorHash == hash)
                     .FirstOrDefault();
+                return tipFromDb;
             }
 
-            return null;
+            return tipFromDb;
 
         }
     }

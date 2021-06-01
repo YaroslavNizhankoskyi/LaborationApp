@@ -48,7 +48,7 @@ export class TipComponent implements OnInit {
   editTip(id: number)
   {
     const ref = this.modal.open(EditTipComponent, { centered: true, size: 'lg' });
-    ref.componentInstance.selecterdTipId = id;
+    ref.componentInstance.selectedTipId = id;
   }
 
   removeTip()
@@ -59,7 +59,7 @@ export class TipComponent implements OnInit {
   addPhoto(id: number)
   {
     const ref = this.modal.open(AddPhotoComponent, { centered: true, size: 'lg' });
-    ref.componentInstance.selecterdTipId = id;
+    ref.componentInstance.selectedTipId = id;
   }
 
   infoTip(id: number)

@@ -42,13 +42,12 @@ export class CreateFactorComponent implements OnInit {
 
     newFactor.factorType = +newFactor.factorType 
 
-    console.log(newFactor);
     this.adminService.addFactor(newFactor).subscribe(
       res => {
         this.toast.success("Factor Created");
       },
       err => {
-        this.toast.success("Factor Created");
+        this.toast.error("Factor Not Created");
       }
     );
 

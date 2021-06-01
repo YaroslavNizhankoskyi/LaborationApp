@@ -61,9 +61,9 @@ export class TipService {
     return this.http.get(`${BASE_API}/user/unread`);
   }
 
-  createUserTip(model: any, userId: string)
+  createUserTip(model: any)
   {
-    return this.http.post(`${BASE_API}/user/${userId}`, model);
+    return this.http.post(`${BASE_API}/user`, model);
   }
 
   watchUserTips(ids: number[])

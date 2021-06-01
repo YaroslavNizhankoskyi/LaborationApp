@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
   <form [formGroup]="factor" (ngSubmit)="createFactor()">
-    <label>Name</label>
+    <label>{{ "FACTOR.NAME" | translate}}</label>
     <div class="form-group">
       <input
         type="text"
@@ -15,7 +15,7 @@
       />
     </div>
     <div class="form-group">
-      <label>FactorType</label>
+      <label>{{ "FACTOR.TYPE" | translate}}</label>
       <select
         type="text"
         required
@@ -29,7 +29,7 @@
       
     </div>
     <div class="form-group">
-      <label>Coefficient</label>
+      <label>{{ "FACTOR.COEF" | translate}}</label>
       <input
         type="number"
         required
@@ -42,9 +42,9 @@
 
     <div class="modal-footer">
       <button class="btn btn-primary mr-2" (click)="modal.dismiss('Cancel')">
-        Cancel
+        {{ "CANCEL" | translate}}
       </button>
-      <button type="submit" [disabled]="!factor.valid" class="btn btn-success">Add</button>
+      <button type="submit" [disabled]="!factor.valid" class="btn btn-success">{{ "ADD" | translate}}</button>
     </div>
   </form>
 </div>

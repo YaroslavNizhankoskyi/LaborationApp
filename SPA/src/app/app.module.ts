@@ -1,3 +1,6 @@
+import { WorkerGetTipComponent } from './layout/worker/worker-get-tip/worker-get-tip/worker-get-tip.component';
+import { WorkerTipComponent } from './layout/worker/worker-tip/worker-tip.component';
+import { FeedbackComponent } from './layout/feedback/feedback/feedback.component';
 import { AddPhotoComponent } from './layout/admin/tip/add-photo/add-photo/add-photo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +26,9 @@ import { TipComponent } from './layout/admin/tip/tip/tip/tip.component';
 import { CreateTipComponent } from './layout/admin/tip/create-tip/create-tip/create-tip.component';
 import { EditTipComponent } from './layout/admin/tip/edit-tip/edit-tip/edit-tip.component';
 import { InfoTipComponent } from './layout/admin/tip/info-tip/info-tip/info-tip.component';
+import { RoleComponent } from './layout/admin/role/role/role.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 
 export function tokenGetter() {
@@ -42,17 +48,25 @@ export function createTranslateLoader(http: HttpClient) {
     CreateFactorComponent,
     TipComponent,
     AddPhotoComponent,
-    InfoTipComponent
+    InfoTipComponent,
+    CreateTipComponent,
+    EditTipComponent,
+    FeedbackComponent,
+    WorkerTipComponent,
+    WorkerGetTipComponent,
+    RoleComponent
   ],
   entryComponents: [
     CreateFactorComponent,
     CreateTipComponent,
     EditTipComponent,
     InfoTipComponent,
-    AddPhotoComponent
+    AddPhotoComponent,
+    WorkerGetTipComponent
   ],
   imports: [
     BrowserAnimationsModule,
+    DragDropModule,
     CommonModule,
     BrowserModule,
     CoreModule,
