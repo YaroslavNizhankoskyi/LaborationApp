@@ -18,12 +18,12 @@ export class CompanyService {
 
   removeCompany(id: number)
   {
-    return this.http.delete(BASE_API + "/" + id);
+    return this.http.delete(BASE_API + "/" +id);
   }
 
   addWorker(model: any)
   {
-    return this.http.post(BASE_API, model);
+    return this.http.post(BASE_API + "/worker", model);
   }
 
   removeWorker(companyId: number, userId: string)

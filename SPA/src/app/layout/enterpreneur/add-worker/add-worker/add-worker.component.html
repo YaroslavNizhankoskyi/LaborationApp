@@ -1,0 +1,25 @@
+<div class="modal-header bg-primary text-white">
+    <h4 class="modal-title" id="modal-basic-title">{{ "COMPANY.ADDWORKER" | translate }}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="worker" (ngSubmit)="createWorker()">
+      <label>{{ "USER.POSITION" | translate}}</label>
+      <div class="form-group">
+        <input
+          type="text"
+          required
+          class="form-control"
+          placeholder="Position"
+          formControlName="position"
+        />
+      </div>
+  
+      <div class="modal-footer">
+        <button class="btn btn-primary mr-2" (click)="modal.dismiss('Cancel')">
+          {{ "CANCEL" | translate}}
+        </button>
+        <button type="submit" [disabled]="!worker.valid" class="btn btn-success">{{ "ADD" | translate}}</button>
+      </div>
+    </form>
+  </div>
+  

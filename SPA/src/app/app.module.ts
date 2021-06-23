@@ -1,3 +1,4 @@
+import { CompanyService } from './data/services/company.service';
 import { WorkerGetTipComponent } from './layout/worker/worker-get-tip/worker-get-tip/worker-get-tip.component';
 import { WorkerTipComponent } from './layout/worker/worker-tip/worker-tip.component';
 import { FeedbackComponent } from './layout/feedback/feedback/feedback.component';
@@ -28,6 +29,10 @@ import { EditTipComponent } from './layout/admin/tip/edit-tip/edit-tip/edit-tip.
 import { InfoTipComponent } from './layout/admin/tip/info-tip/info-tip/info-tip.component';
 import { RoleComponent } from './layout/admin/role/role/role.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { UserInfoComponent } from './layout/enterpreneur/user-info/user-info/user-info.component';
+import { UsersComponent } from './layout/enterpreneur/users/users/users.component';
+import { CompanyCreateComponent } from './layout/enterpreneur/company-create/company-create/company-create.component';
+import { AddWorkerComponent } from './layout/enterpreneur/add-worker/add-worker/add-worker.component';
 
 
 
@@ -54,7 +59,11 @@ export function createTranslateLoader(http: HttpClient) {
     FeedbackComponent,
     WorkerTipComponent,
     WorkerGetTipComponent,
-    RoleComponent
+    RoleComponent,
+    UserInfoComponent,
+    UsersComponent,
+    CompanyCreateComponent,
+    AddWorkerComponent
   ],
   entryComponents: [
     CreateFactorComponent,
@@ -62,7 +71,9 @@ export function createTranslateLoader(http: HttpClient) {
     EditTipComponent,
     InfoTipComponent,
     AddPhotoComponent,
-    WorkerGetTipComponent
+    WorkerGetTipComponent,
+    CompanyCreateComponent,
+    AddWorkerComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -92,7 +103,8 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   providers: [
     FeedbackService,
-    TipService
+    TipService,
+    CompanyService
   ],
   bootstrap: [AppComponent]
 })

@@ -62,17 +62,17 @@
 
       <div *ngIf="(auth.currentUser$ | async).role == 'Enterpreneur'">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/company">
-            <i class="fa fa-building"></i>
-            {{ "NAV.COMPANY" | translate}}
+          <a class="nav-link" routerLink="/users">
+            <i class="fa fa-users"></i>
+            {{ "NAV.USERS" | translate}}
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/company/feedbacks">
             <i class="fa fa-comment"></i>
             {{ "NAV.FEEDBACKS" | translate}}
           </a>
-        </li>
+        </li> -->
       </div>
     </ul>
 

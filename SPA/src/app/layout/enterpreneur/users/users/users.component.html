@@ -1,0 +1,74 @@
+<div style="text-align: center">
+  <div *ngIf="(auth.currentUser$ | async) as owner">
+
+    <div *ngIf="owner.companyName != null" class="container mt-5">
+      <h1>{{"COMPANY.WORKERS"| translate}} {{owner.companyName}}</h1>
+      <br>
+      <hr style="size: 1; color: black" />
+      <br>
+
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">{{'USER.EMAIL'| translate}}</th>
+                <th scope="col">{{'USER.POSITION'| translate}}</th>
+                <th scope="col"> 
+                  {{'FACTOR.OPTIONS'| translate}}
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let worker of workers">
+              <tr>
+                <td>{{worker.email}}</td>
+                <td>{{worker.position}}</td>
+                <td>
+                  <button class="btn btn-info" (click)="userInfo(worker.id)">{{'VIEW'| translate}}</button>
+                  <button class="btn btn-danger ml-2" (click)="removeWorker(worker.email)">{{'REMOVE'| translate}}</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      <hr style="size: 3; color: black" />
+
+      <h1>{{"COMPANY.ADDWORKER"| translate}}</h1>
+
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">{{'USER.EMAIL'| translate}}</th>
+                <th scope="col">{{'USER.AGE'| translate}}</th>
+                <th scope="col"> 
+                  {{'FACTOR.OPTIONS'| translate}}
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let user of allUsers">
+              <tr>
+                <td>{{user.email}}</td>
+                <td>{{user.age}}</td>
+                <td >
+                  <button class="btn btn-success" (click)="addWorker(user.email)">{{'ADD'| translate}}</button>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="owner.companyName == null" class="container mt-5">
+        <h1>{{"COMPANY.EMPTY" | translate}}</h1>
+
+        <button class="btn btn-lg btn-success" (click)="createCompany()">
+          {{ "COMPANY.CREATE" | translate }}
+        </button>
+    </div>
+
+  </div>
+  
+</div>

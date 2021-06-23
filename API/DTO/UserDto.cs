@@ -13,5 +13,7 @@ namespace API.DTO
         public string Id { get; set; }
         public string Email { get; set; }
         public string PhotoUrl { get; set; }
+        public string CompanyName { get; set; }
+        public int CompanyId { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+import { EnterpreneurModule } from './../modules/enterpreneur/enterpreneur.module';
 import { WorkerModule } from './../modules/worker/worker.module';
 import { AdminModule } from './../modules/admin/admin.module';
 import { NgModule } from '@angular/core';
@@ -11,7 +12,8 @@ import { AuthModule } from '../modules/auth/auth.module';
   imports: [
     AuthModule,
     AdminModule,
-    WorkerModule
+    WorkerModule,
+    EnterpreneurModule
   ]
 })
 export class CoreModule { }

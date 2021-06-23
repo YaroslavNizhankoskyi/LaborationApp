@@ -14,9 +14,14 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  listUsers(email: string)
+  listUsers()
   {
-    return this.http.get(BASE_API + "/users");
+    return this.http.get(BASE_API + "users");
+  }
+
+  listUnemployed()
+  {
+    return this.http.get(BASE_API + "unemployed");
   }
 
   getUsersInRole(role: string){

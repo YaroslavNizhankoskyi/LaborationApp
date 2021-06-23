@@ -6,6 +6,7 @@
     "CANCEL": "Cancel",
     "SUBMIT": "Submit",
     "VIEW": "View",
+    "CREATE":"Create",
     "NAV": 
     {
         "HOME": "Home",
@@ -14,7 +15,8 @@
         "ADMIN": "Admin",
         "COMPANY": "Company",
         "FACTORS": "Factors",
-        "ROLES":"Roles"
+        "ROLES":"Roles",
+        "USERS": "Users"
     },
     "AUTH":
     {
@@ -73,5 +75,17 @@
         "WORKERS":"Workers",
         "ADMINS":"Admins",
         "ENTERPRENEURS":"Enterpreneurs"
+    },
+    "COMPANY": {
+        "WORKERS": "Workers of the company: ",
+        "USERS": "Potential workers",
+        "ADDWORKER": "Add new worker",
+        "EMPTY":"You haven't yet created your company",
+        "CREATE": "Create one now!"      
+    },
+    "USER": {
+        "AGE": "Age",
+        "POSITION": "Position",
+        "EMAIL":"Email"
     }
 }

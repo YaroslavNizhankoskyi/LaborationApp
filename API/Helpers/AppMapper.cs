@@ -28,6 +28,8 @@ namespace API.Helpers
 
             CreateMap<User, UserQuickInfoDto>();
 
+            CreateMap<User, WorkerDto>();
+
             CreateMap<User, User>();
 
             CreateMap<User, UserDto>();
@@ -47,13 +49,6 @@ namespace API.Helpers
             CreateMap<CreateFactorDto, Factor>()
                 .ForMember(p => p.FactorTypeId, s => s
                 .MapFrom( x => x.FactorType));
-
-            CreateMap<Tip, TipDetailsDto>();
-            CreateMap<Tip, TipDetailsDto>();
-            CreateMap<Tip, TipDetailsDto>();
-            CreateMap<Tip, TipDetailsDto>();
-            CreateMap<Tip, TipDetailsDto>();
-            CreateMap<Tip, TipDetailsDto>();
 
         }
     }

@@ -124,7 +124,10 @@ namespace API.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            if (_tipService.CreateUserTip(model, user.Id)) return Ok("Created");
+            if (_tipService.CreateUserTip(model, user.Id))
+            {
+                return Ok();
+            }
 
             return BadRequest("Operation of adding your tip has been failed");
         }

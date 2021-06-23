@@ -46,7 +46,7 @@ namespace API.Controllers
                 EnterpreneurId = user.Id
             };
 
-            if (model.File.Length > 0)
+            if (model.File != null)
             {
 
                 var result = await _photoService.AddMediumPhotoAsync(model.File);
@@ -210,8 +210,8 @@ namespace API.Controllers
                 workers = workers
                     .Where(p => p.Email.Contains(email));
             }
-
             var model = _mapper.Map<IEnumerable<WorkerDto>>(workers);
+            //var model = _mapper.Map<User[], IList<WorkerDto>>(workers.ToArray());
 
             return Ok(model);
 

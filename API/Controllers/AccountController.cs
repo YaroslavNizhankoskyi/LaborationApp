@@ -79,7 +79,21 @@ namespace API.Controllers
                 Email = user.Email,
                 Id = user.Id,
                 PhotoUrl = photoUrl
-            };
+            };        
+
+            if ((await _userManager.IsInRoleAsync(user, "Enterpreneur"))) 
+            {
+
+                var company = _uow.CompanyRepository
+                    .Find(u => u.EnterpreneurId == user.Id)
+                    .FirstOrDefault();
+
+                if (company != null) 
+                {
+                    userInfo.CompanyId = company.Id;
+                    userInfo.CompanyName = company.Name;
+                }
+            }
 
             return Ok(userInfo);
         }

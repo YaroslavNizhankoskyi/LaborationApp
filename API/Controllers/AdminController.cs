@@ -69,6 +69,17 @@ namespace API.Controllers
             return Ok(model);
         }
 
+        [Authorize(Roles = "Admin, Enterpreneur")]
+        [HttpGet("unemployed")]
+        public async Task<IActionResult> ListPotentialWorkers()
+        {
+            var users = (await _userManager.GetUsersInRoleAsync("Worker")).Where(m => !m.CompanyId.HasValue);
+
+            var model = _mapper.Map<User[], IList<UserQuickInfoDto>>(users.ToArray());
+
+            return Ok(model);
+        }
+
         [HttpGet("roles/{name}")]
         public async Task<IActionResult> GetUsersInRole(string name)
         {
@@ -129,6 +140,7 @@ namespace API.Controllers
             {
                 Response.AddPaginationHeader(factors.CurrentPage, factors.PageSize,
                     factors.TotalCount, factors.TotalPages);
+
 
                 return Ok(factors);
             }
