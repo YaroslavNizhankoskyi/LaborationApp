@@ -5,6 +5,7 @@
 /integration/bazel/bazel-*
 *.log
 node_modules
+Mobile/
 
 # Include when developing application packages.
 pubspec.lock
