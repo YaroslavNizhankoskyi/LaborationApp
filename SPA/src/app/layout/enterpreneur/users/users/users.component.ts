@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/data/services/auth.service';
 import { AddWorkerComponent } from '../../add-worker/add-worker/add-worker.component';
+import { UserInfoComponent } from '../../user-info/user-info/user-info.component';
 
 @Component({
   selector: 'app-users',
@@ -37,14 +38,12 @@ export class UsersComponent implements OnInit {
     this.admin.listUnemployed().subscribe(res => 
       {
         this.allUsers = res
-        console.log(this.allUsers)
       }
     )
 
     this.company.getWorkers(this.companyOwner.companyId).subscribe(res => 
       {
         this.workers = res
-        console.log(this.workers)
       })
 
     
@@ -52,7 +51,7 @@ export class UsersComponent implements OnInit {
 
   createCompany()
   {
-    const ref = this.modal.open(CompanyCreateComponent, { centered: true, size: 'lg' });
+    const ref = this.modal.open(CompanyCreateComponent, { centered: true, size: 'sm' });
   }
 
   addWorker(email: string){
@@ -72,5 +71,10 @@ export class UsersComponent implements OnInit {
         this.toast.success("Removed");
       }
     )
+  }
+
+  workerInfo(id: string){
+    const ref = this.modal.open(UserInfoComponent, { centered: true, size: 'lg' });
+    ref.componentInstance.workerId = id;
   }
 }

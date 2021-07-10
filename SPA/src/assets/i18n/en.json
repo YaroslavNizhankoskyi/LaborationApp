@@ -7,6 +7,7 @@
     "SUBMIT": "Submit",
     "VIEW": "View",
     "CREATE":"Create",
+    "INFO": "Info",
     "NAV": 
     {
         "HOME": "Home",
@@ -81,7 +82,14 @@
         "USERS": "Potential workers",
         "ADDWORKER": "Add new worker",
         "EMPTY":"You haven't yet created your company",
-        "CREATE": "Create one now!"      
+        "CREATE": "Create one now!",
+        "NAME": "Name",
+        "DESCRIPTION":"Description",
+        "INFO": {
+            "FAULTCHANCE":"Fault chance",
+            "DATE": "date",
+            "LABOR":"Labor type"
+        }      
     },
     "USER": {
         "AGE": "Age",

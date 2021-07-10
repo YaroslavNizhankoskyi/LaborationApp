@@ -1,1 +1,29 @@
-<p>user-info works!</p>
+<div class="modal-header bg-primary text-white">
+    <h4 class="modal-title" id="modal-basic-title">{{ "INFO" | translate }}</h4>
+  </div>
+  <div class="modal-body">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">{{'COMPANY.INFO.LABOR'| translate}}</th>
+            <th scope="col">{{'COMPANY.INFO.DATE'| translate}}</th>
+            <th scope="col">{{'COMPANY.INFO.FAULTCHANCE'| translate}}</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let char of characteristics">
+          <tr>
+            <td>{{char.labor}}</td>
+            <td>{{char.date | date:'short'}}</td>
+            <td>{{char.faultChance}}</td>
+          </tr>
+        </tbody>
+      </table>
+       
+  
+      <div class="modal-footer">
+        <button class="btn btn-primary mr-2" (click)="modal.dismiss('Cancel')">
+          {{ "CLOSE" | translate }}
+        </button>
+      </div>
+  </div>
+  

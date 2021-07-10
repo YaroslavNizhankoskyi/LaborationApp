@@ -36,4 +36,8 @@ export class CompanyService {
     return this.http.get(BASE_API + "/" + companyId + "/worker");
   }
 
+  getWorkerInfo(id: string) : any{
+    return this.http.get(`${BASE_API}/info/${id}`);
+  }
+
 }

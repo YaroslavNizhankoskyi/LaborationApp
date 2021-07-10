@@ -24,7 +24,7 @@
                 <td>{{worker.email}}</td>
                 <td>{{worker.position}}</td>
                 <td>
-                  <button class="btn btn-info" (click)="userInfo(worker.id)">{{'VIEW'| translate}}</button>
+                  <button class="btn btn-info" (click)="workerInfo(worker.id)">{{'VIEW'| translate}}</button>
                   <button class="btn btn-danger ml-2" (click)="removeWorker(worker.email)">{{'REMOVE'| translate}}</button>
                 </td>
               </tr>

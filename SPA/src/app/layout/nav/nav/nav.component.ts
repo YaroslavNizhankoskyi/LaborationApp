@@ -29,8 +29,6 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getNumberOfUnreadFeedbacks()
-    this.getNumberOfUnreadTips();
     this.auth.currentUser$.subscribe( res => {
     });
 

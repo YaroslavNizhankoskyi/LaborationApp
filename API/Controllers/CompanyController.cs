@@ -216,5 +216,24 @@ namespace API.Controllers
             return Ok(model);
 
         }
+
+        
+        [AllowAnonymous]
+        [HttpGet("info/{workerId}")]
+        public async Task<IActionResult> GetUserInfo(string workerId) 
+        {
+            var user = await _userManager.FindByIdAsync(workerId);
+
+            var characteristics = _uow.UserCharacteristicRepository
+                .Find(c => c.UserId == workerId);
+
+            var model = new WorkerInfoDto
+            {
+                WorkerName = user.UserName,
+                UserCharacteristics = _mapper.Map<IEnumerable<UserCharacteristicsDto>>(characteristics)
+            };
+
+            return Ok(model);
+        }
     }
 }

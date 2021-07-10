@@ -73,7 +73,8 @@ export function createTranslateLoader(http: HttpClient) {
     AddPhotoComponent,
     WorkerGetTipComponent,
     CompanyCreateComponent,
-    AddWorkerComponent
+    AddWorkerComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -50,6 +50,8 @@ namespace API.Helpers
                 .ForMember(p => p.FactorTypeId, s => s
                 .MapFrom( x => x.FactorType));
 
+            CreateMap<UserCharacteristic, UserCharacteristicsDto>();
+
         }
     }
 }
