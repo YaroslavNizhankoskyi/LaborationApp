@@ -6,6 +6,10 @@
   font-size: 24px;
 }
 
+a{
+  color: white;
+}
+
 .navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
   font-size: 0.75rem;
   position: absolute;
