@@ -10,15 +10,17 @@ import { EnterpreneurModule } from './modules/enterpreneur/enterpreneur.module';
 const routes: Routes = [
   {
     path: '',
+    canDeactivate: [AuthGuard],
+    loadChildren: () => import('./modules/auth/auth.module')
+    .then(m => m.AuthModule)
+  },
+  {
+    path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
       {path: '', component: HomeComponent} 
     ]
-  },
-  {
-    path: '', loadChildren: () => import('./modules/auth/auth.module')
-    .then(m => m.AuthModule)
   },
   {
     path: 'admin',
