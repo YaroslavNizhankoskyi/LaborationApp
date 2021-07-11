@@ -56,6 +56,9 @@ namespace API
 
             services.AddTransient<ITipCalculator, TipCalculator>();
 
+            /*services.AddDbContextPool<DataContext>(
+               options => options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));*/
+
             services.AddDbContext<DataContext>(options =>
             {
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");

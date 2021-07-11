@@ -10,37 +10,37 @@ import { GuestGuard } from './media/guards/guest.guard';
 
 const routes: Routes = [
   {
-    path: '',
-    canActivate: [GuestGuard],
-    loadChildren: () => import('./modules/auth/auth.module')
+    path: 'auth',
+    loadChildren: ()=> import('./modules/auth/auth.module')
     .then(m => m.AuthModule)
   },
+  {path: 'home', component: HomeComponent},
   {
-    path: '',
+    path: '**',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      {path: '', component: HomeComponent} 
+      {
+        path: 'admin',
+        canActivate:[AdminGuard],
+        loadChildren: () => import('./modules/admin/admin.module')
+        .then(m => m.AdminModule)
+      },
+      {
+        path: 'worker',
+        canActivate: [WorkerGuard],
+        loadChildren: () => import('./modules/worker/worker.module')
+        .then(m => m.WorkerModule)
+      },
+      {
+        path: 'owner',
+        canActivate: [EnterpreneurGuard],
+        loadChildren: () => import('./modules/enterpreneur/enterpreneur.module')
+        .then(m => m.EnterpreneurModule)
+      },
     ]
   },
-  {
-    path: 'admin',
-    canActivate:[AdminGuard],
-    loadChildren: () => import('./modules/admin/admin.module')
-    .then(m => m.AdminModule)
-  },
-  {
-    path: 'worker',
-    canActivate: [WorkerGuard],
-    loadChildren: () => import('./modules/worker/worker.module')
-    .then(m => m.WorkerModule)
-  },
-  {
-    path: 'owner',
-    canActivate: [EnterpreneurGuard],
-    loadChildren: () => import('./modules/enterpreneur/enterpreneur.module')
-    .then(m => m.EnterpreneurModule)
-  }
+ 
 ];
 
 @NgModule({

@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
       this.model = Object.assign({}, this.registerForm.value);
       this.auth.register(this.model).subscribe( () => {
         this.toast.success("Registered");
-        this.route.navigateByUrl('');
+        this.route.navigateByUrl('home');
       },
       err => this.toast.error(err));
     }
@@ -84,7 +84,7 @@ export class RegisterComponent implements OnInit {
         res => 
         {
           this.toast.success("Logged in");
-          this.route.navigateByUrl('')
+          this.route.navigateByUrl('home')
         },
         err => 
         {

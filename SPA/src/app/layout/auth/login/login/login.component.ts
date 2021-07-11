@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         res => 
         {
           this.toast.success("Logged in");
-          this.route.navigateByUrl('')
+          this.route.navigateByUrl('home')
         },
         err => 
         {
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         res => 
         {
           this.toast.success("Logged in");
-          this.route.navigateByUrl('')
+          this.route.navigateByUrl('home')
         },
         err => 
         {
