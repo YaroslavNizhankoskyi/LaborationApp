@@ -6,11 +6,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './layout/home/home/home.component';
 import { AuthGuard } from './media/guards/auth.guard';
 import { EnterpreneurModule } from './modules/enterpreneur/enterpreneur.module';
+import { GuestGuard } from './media/guards/guest.guard';
 
 const routes: Routes = [
   {
     path: '',
-    canDeactivate: [AuthGuard],
+    canActivate: [GuestGuard],
     loadChildren: () => import('./modules/auth/auth.module')
     .then(m => m.AuthModule)
   },
