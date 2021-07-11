@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row main">
     <div class="main-login main-center">
-      <h5 class="text-center">Register</h5>
+      <h5 class="text-center">{{"AUTH.REGISTER.REGISTER" | translate}}</h5>
       <form [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="form-group">
           <div class="cols-sm-10">
@@ -9,7 +9,7 @@
               <span class="input-group-addon"
                 ><i class="fa fa-user fa mr-2" aria-hidden="true"></i>
                 <label for="name" class="cols-sm-2 control-label"
-                  >Your First Name</label
+                  >{{"AUTH.REGISTER.FIRSTNAME" | translate}}</label
                 ></span
               >
               <input
@@ -37,7 +37,7 @@
               <span class="input-group-addon"
                 ><i class="fa fa-user fa mr-2" aria-hidden="true"></i>
                 <label for="name" class="cols-sm-2 control-label"
-                  >Your Second Name</label
+                  >{{"AUTH.REGISTER.SECONDNAME" | translate}}</label
                 ></span
               >
               <input
@@ -65,7 +65,7 @@
               <span class="input-group-addon"
                 ><i class="fa fa-envelope fa mr-2" aria-hidden="true"></i>
                 <label for="email" class="cols-sm-2 control-label"
-                  >Your Email</label
+                  >{{"AUTH.REGISTER.EMAIL" | translate}}</label
                 >
               </span>
               <input
@@ -93,7 +93,7 @@
               <span class="input-group-addon"
                 ><i class="fa fa-calendar fa-lg mr-2" aria-hidden="true"></i>
                 <label for="password" class="cols-sm-2 control-label"
-                  >Age</label
+                  >{{"AUTH.REGISTER.AGE" | translate}}</label
                 >
               </span>
               <input
@@ -123,7 +123,7 @@
               <span class="input-group-addon"
                 ><i class="fa fa-lock fa-lg mr-2" aria-hidden="true"></i>
                 <label for="password" class="cols-sm-2 control-label"
-                  >Password</label
+                  >{{"AUTH.REGISTER.PASSWORD" | translate}}</label
                 >
               </span>
               <input
@@ -150,7 +150,7 @@
               <span class="input-group-addon"
                 ><i class="fa fa-lock fa-lg mr-2" aria-hidden="true"></i>
                 <label for="confirm" class="cols-sm-2 control-label"
-                  >Confirm Password</label
+                  >{{"AUTH.REGISTER.CONFIRMPASSWORD" | translate}}</label
                 ></span
               >
               <input
@@ -178,7 +178,7 @@
               <span class="input-group-addon"
                 ><i class="fa fa-users fa-lg mr-2" aria-hidden="true"></i>
                 <label for="password" class="cols-sm-2 control-label"
-                  >Role</label
+                  >{{"AUTH.REGISTER.ROLE" | translate}}</label
                 >
               </span>
               <select class="form-control" formControlName="role">
@@ -207,10 +207,28 @@
             id="button"
             class="btn btn-primary btn-lg btn-block login-button"
           >
-            Register
+          {{ "AUTH.REGISTER.REGISTER" | translate}}
           </button>
         </div>
+        <div class="text-center">
+          <h2>{{ "AUTH.LOGIN.LOGINAS" | translate}}</h2>
+          <div class="row">
+              <div class="col-md-3">
+                  <button class="btn btn-success" (onlick)="quickLogin('admin.test@gmail.com', 'Password1')">
+                    {{ "AUTH.REGISTER.ADMIN" | translate}}</button>
+              </div>
+              <div class="col-md-3 ml-2">
+                  <button class="btn btn-success"  (onlick)="quickLogin('enterpreneur.test@gmail.com', 'Password1')">
+                    {{ "AUTH.REGISTER.ENTERPRENEUR" | translate}}</button>
+              </div>
+              <div class="col-md-3 offset-md-2">
+                  <button class="btn  btn-success" (onlick)="quickLogin('worker.test@gmail.com', 'Password1')">
+                    {{ "AUTH.REGISTER.WORKER" | translate}}</button>
+              </div>
+          </div>
+      </div>
       </form>
     </div>
+    
   </div>
 </div>

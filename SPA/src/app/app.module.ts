@@ -4,7 +4,7 @@ import { WorkerTipComponent } from './layout/worker/worker-tip/worker-tip.compon
 import { FeedbackComponent } from './layout/feedback/feedback/feedback.component';
 import { AddPhotoComponent } from './layout/admin/tip/add-photo/add-photo/add-photo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { NgModule } from '@angular/core';
@@ -17,7 +17,7 @@ import { FeedbackService } from './data/services/feedback.service';
 import { TipService } from './data/services/tip.service';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FactorComponent } from './layout/admin/factor/factor/factor.component';
@@ -33,6 +33,9 @@ import { UserInfoComponent } from './layout/enterpreneur/user-info/user-info/use
 import { UsersComponent } from './layout/enterpreneur/users/users/users.component';
 import { CompanyCreateComponent } from './layout/enterpreneur/company-create/company-create/company-create.component';
 import { AddWorkerComponent } from './layout/enterpreneur/add-worker/add-worker/add-worker.component';
+import { RegisterComponent } from './layout/auth/register/register/register.component';
+import { LoginComponent } from './layout/auth/login/login/login.component';
+import { AuthService } from './data/services/auth.service';
 
 
 
@@ -47,6 +50,8 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    RegisterComponent,
+    LoginComponent,
     NavComponent,
     HomeComponent,
     FactorComponent,
@@ -63,7 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
     UserInfoComponent,
     UsersComponent,
     CompanyCreateComponent,
-    AddWorkerComponent
+    AddWorkerComponent,
   ],
   entryComponents: [
     CreateFactorComponent,
@@ -77,12 +82,13 @@ export function createTranslateLoader(http: HttpClient) {
     UserInfoComponent
   ],
   imports: [
+    FormsModule,
     BrowserAnimationsModule,
     DragDropModule,
     CommonModule,
     BrowserModule,
-    CoreModule,
     SharedModule,
+    CoreModule,
     AppRoutingModule,
     ReactiveFormsModule,
     JwtModule.forRoot({
@@ -105,7 +111,8 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     FeedbackService,
     TipService,
-    CompanyService
+    CompanyService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

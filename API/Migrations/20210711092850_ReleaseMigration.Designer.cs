@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210316090304_PhotoFunctionality")]
-    partial class PhotoFunctionality
+    [Migration("20210711092850_ReleaseMigration")]
+    partial class ReleaseMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,6 +134,9 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CanDelete")
+                        .HasColumnType("bit");
 
                     b.Property<int>("CoefficientSum")
                         .HasColumnType("int");
@@ -497,17 +500,17 @@ namespace API.Migrations
                     b.HasOne("API.Models.Factor", "HealthFactor")
                         .WithMany("HealthTips")
                         .HasForeignKey("HealthFactorId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("API.Models.Factor", "LaborFactor")
                         .WithMany("LaborTips")
                         .HasForeignKey("LaborFactorId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("API.Models.Factor", "MentalFactor")
                         .WithMany("MentalTips")
                         .HasForeignKey("MentalFactorId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("API.Models.Photo", "Photo")
                         .WithOne("Tip")
@@ -516,7 +519,7 @@ namespace API.Migrations
                     b.HasOne("API.Models.Factor", "SleepFactor")
                         .WithMany("SleepTips")
                         .HasForeignKey("SleepFactorId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("HealthFactor");
 

@@ -39,4 +39,21 @@ export class LoginComponent implements OnInit {
       )
   }
 
+  quickLogin(email: string, password: string){
+    let login: Login = new Login();
+      login.email = email;
+      login.password = password;
+      this.auth.login(login).subscribe( 
+        res => 
+        {
+          this.toast.success("Logged in");
+          this.route.navigateByUrl('')
+        },
+        err => 
+        {
+          this.toast.error(err);
+        }
+      )
+  }
+
 }

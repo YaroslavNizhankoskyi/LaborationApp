@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class ReleaseMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,12 +29,26 @@ namespace API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FactorTypeId = table.Column<int>(type: "int", nullable: false),
                     FactorType = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Coefficient = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Factors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    PublicId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,13 +78,16 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    PhotoId = table.Column<int>(type: "int", nullable: true),
                     FactorHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HealthFactorId = table.Column<int>(type: "int", nullable: true),
                     MentalFactorId = table.Column<int>(type: "int", nullable: true),
                     SleepFactorId = table.Column<int>(type: "int", nullable: true),
-                    LaborFactorId = table.Column<int>(type: "int", nullable: true)
+                    LaborFactorId = table.Column<int>(type: "int", nullable: true),
+                    CoefficientSum = table.Column<int>(type: "int", nullable: false),
+                    CanDelete = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,22 +96,32 @@ namespace API.Migrations
                         name: "FK_Tips_Factors_HealthFactorId",
                         column: x => x.HealthFactorId,
                         principalTable: "Factors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Tips_Factors_LaborFactorId",
                         column: x => x.LaborFactorId,
                         principalTable: "Factors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Tips_Factors_MentalFactorId",
                         column: x => x.MentalFactorId,
                         principalTable: "Factors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Tips_Factors_SleepFactorId",
                         column: x => x.SleepFactorId,
                         principalTable: "Factors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Tips_Photos_PhotoId",
+                        column: x => x.PhotoId,
+                        principalTable: "Photos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,12 +191,20 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EnterpreneurId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EnterpreneurId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PhotoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companys", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Companys_Photos_PhotoId",
+                        column: x => x.PhotoId,
+                        principalTable: "Photos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,11 +212,12 @@ namespace API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecondName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SecondName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Age = table.Column<int>(type: "int", nullable: false),
+                    PhotoId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -206,6 +242,12 @@ namespace API.Migrations
                         principalTable: "Companys",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Photos_PhotoId",
+                        column: x => x.PhotoId,
+                        principalTable: "Photos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,7 +258,7 @@ namespace API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     EnterpreneurId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Watched = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -242,7 +284,7 @@ namespace API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Labor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Labor = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     FaultChance = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -323,6 +365,13 @@ namespace API.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_PhotoId",
+                table: "AspNetUsers",
+                column: "PhotoId",
+                unique: true,
+                filter: "[PhotoId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -335,6 +384,13 @@ namespace API.Migrations
                 column: "EnterpreneurId",
                 unique: true,
                 filter: "[EnterpreneurId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Companys_PhotoId",
+                table: "Companys",
+                column: "PhotoId",
+                unique: true,
+                filter: "[PhotoId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Feedbacks_EnterpreneurId",
@@ -360,6 +416,13 @@ namespace API.Migrations
                 name: "IX_Tips_MentalFactorId",
                 table: "Tips",
                 column: "MentalFactorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tips_PhotoId",
+                table: "Tips",
+                column: "PhotoId",
+                unique: true,
+                filter: "[PhotoId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tips_SleepFactorId",
@@ -466,6 +529,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Companys");
+
+            migrationBuilder.DropTable(
+                name: "Photos");
         }
     }
 }

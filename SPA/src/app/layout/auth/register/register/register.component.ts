@@ -3,6 +3,8 @@ import { AuthService } from './../../../../data/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { Register } from 'src/app/data/types/auth/Register';
+import { Login } from 'src/app/data/types/auth/Login';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +15,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private auth: AuthService,
               private toast: ToastrService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private route: Router) { }
 
   model: Register;
   
@@ -67,9 +70,27 @@ export class RegisterComponent implements OnInit {
       this.model = Object.assign({}, this.registerForm.value);
       this.auth.register(this.model).subscribe( () => {
         this.toast.success("Registered");
+        this.route.navigateByUrl('');
       },
       err => this.toast.error(err));
     }
+  }
+
+  quickLogin(email: string, password: string){
+    let login: Login = new Login();
+      login.email = email;
+      login.password = password;
+      this.auth.login(login).subscribe( 
+        res => 
+        {
+          this.toast.success("Logged in");
+          this.route.navigateByUrl('')
+        },
+        err => 
+        {
+          this.toast.error(err);
+        }
+      )
   }
 
 }

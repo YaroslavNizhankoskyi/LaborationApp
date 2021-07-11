@@ -64,7 +64,7 @@ namespace API
 
                 if (env == "Development")
                 {
-                    connStr = Configuration.GetConnectionString("SqlServerConnection");
+                    connStr = Configuration.GetConnectionString("NpgConnection");
                 }
                 else
                 {

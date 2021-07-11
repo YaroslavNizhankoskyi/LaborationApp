@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { AuthService } from './../../data/services/auth.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './../../layout/auth/register/register/register.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -13,15 +12,9 @@ const routes:Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    RegisterComponent,
-  ],
   imports: [
-    RouterModule.forChild(routes),
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule
+    CommonModule,  
+    RouterModule.forRoot(routes),
   ],
   providers: [
     AuthService

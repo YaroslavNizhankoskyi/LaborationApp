@@ -2,28 +2,46 @@
     <div class="row justify-content-center">
         
         <div class="col-md-6 login-form-2">
-            <h3>Login</h3>
+            <h3>{{ "AUTH.LOGIN.LOGIN" | translate}}</h3>
             <form>
                 <div class="form-group">
                     <input type="text" [(ngModel)]="email" required
-                    class="form-control" placeholder="Your Email *" name="email" />
+                    class="form-control" placeholder="@mail" name="email" />
                 </div>
                 <div class="form-group">
                     <input type="password" [(ngModel)]="password" required
-                    class="form-control" placeholder="Your Password *" name="password" />
+                    class="form-control" placeholder="password" name="password" />
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btnSubmit" (click)="login()"> Send</button>
+                    <button type="submit" class="btnSubmit" (click)="login()"> {{ "AUTH.LOGIN.LOGIN" | translate}}</button>
                 </div>
                 <div class="row justify-content-center">
                     <div class="form-group mr-5">
-                        <a href="#" class="ForgetPwd">Forget Password?</a>
+                        <a href="#" class="ForgetPwd">{{ "AUTH.LOGIN.FORGETPASS" | translate}}</a>
                     </div>
                     <div class="form-group">
-                        <a href="register" class="ForgetPwd" value="Register">Register</a>
+                        <a href="register" class="ForgetPwd" value="Register">{{ "AUTH.REGISTER.REGISTER" | translate}}</a>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <h2>{{ "AUTH.LOGIN.LOGINAS" | translate}}</h2>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button class="btn btn-success" (onlick)="quickLogin('admin.test@gmail.com', 'Password1')">
+                              {{ "AUTH.REGISTER.ADMIN" | translate}}</button>
+                        </div>
+                        <div class="col-md-3 ml-2">
+                            <button class="btn btn-success"  (onlick)="quickLogin('enterpreneur.test@gmail.com', 'Password1')">
+                              {{ "AUTH.REGISTER.ENTERPRENEUR" | translate}}</button>
+                        </div>
+                        <div class="col-md-3 offset-md-2">
+                            <button class="btn  btn-success" (onlick)="quickLogin('worker.test@gmail.com', 'Password1')">
+                              {{ "AUTH.REGISTER.WORKER" | translate}}</button>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
+        
     </div>
 </div>
